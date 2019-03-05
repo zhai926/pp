@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/css/header/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/login/login.css}"/>
+    <link rel="stylesheet" th:href="@{/css/personalCenter/city.css}"/>
+    <link rel="stylesheet" th:href="@{/css/personalCenter/personalCenter.css}"/>
+    <script th:src="@{/js/jquery-1.8.3.js}"></script>
+
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/city.min.js}"></script>
+
+    <script th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+    <script th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.form.js}"></script>
+    <script th:src="@{/js/plugins/layer/layer.js}"></script>
+</head>
+<body class="HolyGrail">
+<header>
+    <div class="inner1 clearfix">
+        <div class="logo">
+            <img src="../../img/logo.png" alt="">
+        </div>
+        <div class="nav">
+            <ul class="clearfix">
+                <li>
+                    <a th:href="@{/}">首页</a>
+                </li>
+                <li>
+                    <a href="https://puritan.tmall.hk/p/rd663629.htm?ali_trackid=42_7b0e34ba50a8e2fbc3d5a69695f31c69" >在线商城</a>
+                </li>
+                <li>
+                    <a th:href="@{/article/healthy}">健康顾问</a>
+                </li>
+                <li>
+                    <a href="./article/about_us" >关于我们</a>
+                </li>
+                <li>
+                    <a class="mini_code" >防伪查询</a>
+                </li>
+            </ul>
+        </div>
+        <div class="loginInfo">
+            <ul class="clearfix">
+                <th:block th:if="${null != PPM}">
+                    <li style="width: auto;">
+                        <a th:href="@{/member/center}" th:text="${#strings.substring(PPMM,0,3) + '***' + #strings.substring(PPMM,6,11)}">Admin</a><!-- #strings.substring(PPMM,0,3) + '******' + #strings.substring(PPMM,6,11)} -->
+                    </li>
+                    <li>
+                        <a th:href="@{/login/logout}">退出</a>
+                    </li>
+                </th:block>
+                <th:block th:unless="${null != PPM}">
+                    <li>
+                        <a class="login" th:href="@{/login}">登陆</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/register}">注册</a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </div>
+</header>
+<main class="HolyGrail inner">
+    <div class="HolyGrail-body">
+        <main class="HolyGrail-content">
+            <table>
+                <thead>
+                <tr>
+                    <th>领取奖励</th>
+                    <th>领取时间</th>
+                    <th>当前状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="gift: ${memberGiftList}">
+                    <td th:text="${gift.giftName}">维生素B族的保健品</td>
+                    <td th:text="${#dates.format(gift.createTime, 'yyyy-MM-dd')}">2018-01-06</td>
+                    <td th:class="${gift.status == 'I'} ? 'awaitStatus' : 'alreadyStatus'">
+                        <span></span>
+                        <small th:text="${gift.statusName}">待兑换</small>
+                    </td>
+                    <td class="theme-buy">
+                        <th:block th:if="${gift.status == 'I'}">
+                            <a href="javascript:void(0)" class="btn btn-primary btn-large conversion" th:data-membergiftid="${gift.id}">兑换</a>
+                        </th:block>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </main>
+        <nav class="HolyGrail-nav">
+            <ul>
+                <li class="headPortrait">
+                    <img src="../../img/pic1.png" alt="加载失败">
+                </li>
+                <li class="userName">
+                    <p>Admin</p>
+                </li>
+                <li class="address">
+                    <a href="javascript:void(0)">收货地址管理</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="theme-popover goodsAddress">
+        <div class="theme-poptit">
+            <a href="javascript:void(0)" title="关闭" class="close">×</a>
+            <i></i>
+            <h3>请选择发货地址</h3>
+        </div>
+        <div class="theme-popbod dform">
+            <div class="content addressSelect">
+                <ul id="showAddressList">
+                </ul>
+                <div class="nextBtn">
+                    <a href="javascript:void(0)">下一步</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="theme-popover conversionSucceed">
+        <div class="theme-popbod dform conversionSucceedInfo">
+            <div class="content">
+                <h2>恭喜您兑换成功</h2>
+                <p>*商品将在1-7个工作日内发货</p>
+                <div class="confirm">
+                    <a href="javascript:void(0)">我知道了</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="theme-popover manageAddress">
+        <div class="theme-poptit">
+            <a href="javascript:void(0)" title="关闭" class="close">×</a>
+            <i></i>
+            <h3>请选择发货地址</h3>
+        </div>
+        <div class="theme-popbod dform">
+            <div class="content">
+                <ul id="addressList">
+                    <!--<li th:class="${'clearfix addressList  M_' + address.addressId}" th:each="address: ${memberAddressList}" >
+                        <div class="address">
+                            <h4>
+                                <span class="linkmanName" th:text="${address.contactName}">马宁丰</span>
+                                <span class="userPhone" th:text="${address.contactPhone}">15021880287</span>
+                            </h4>
+                            <p>地址:<span class="linkmanAddress" th:text="${address.addressDetail}">上海市黄浦区黄浦路30号海湾大厦7楼C室</span></p>
+                        </div>
+                        <div class="operation">
+                            <a href="javascript:void(0)" onclick="editAddress(this)" th:data-id="${address.id}" th:data-addressId="${address.addressId}" th:data-contactname="${address.contactName}"
+                               th:data-contactphone="${address.contactPhone}" th:data-provincename="${address.provinceName}" th:data-cityname="${address.cityName}" th:data-areaname="${address.areaName}"
+                               th:data-addressdetail="${address.addressDetail}">
+                                <img src="" alt="编辑">
+                            </a>
+                            <a href="javascript:void(0)" onclick="deleteAddress(this)" th:data-id="${address.id}">
+                                <img src="" alt="删除">
+                            </a>
+                        </div>
+                    </li>-->
+                </ul>
+                <div class="add">
+                    <a href="javascript:void(0)">添加新地址</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="theme-popover addAddress">
+        <div class="theme-poptit">
+            <a href="javascript:void(0)" title="关闭" class="close">×</a>
+            <i></i>
+            <h3>添加地址</h3>
+        </div>
+        <div class="theme-popbod dform">
+            <div id="content-wrap clearfix">
+                <div id="content-left clearfix" class="demo">
+                    <form action="" name="form1" id="addAddressForm" method="post" th:action="@{/member/address/save}">
+                        <div class="name item">
+                            <label for="contactName"><i class="sign">*</i>姓名</label>
+                            <input type="text" name="contactName" id="contactName" placeholder="请选择姓名"/>
+                            <input type="text" name="id" id="id" hidden="true" />
+                            <input type="text" name="addressId" id="addressId" hidden="true"/>
+                        </div>
+                        <div class="phone item">
+                            <label for="contactPhone"><i class="sign">*</i>联系方式</label>
+                            <input type="text" name="contactPhone" id="contactPhone" placeholder="请输入联系方式" />
+                        </div>
+                        <div class="infolist item clearfix">
+                            <label><i class="sign">*</i>地址:</label>
+                            <div class="liststyle">
+                                <span id="Province">
+                                    <i id="provSel">请选择省份</i>
+                                    <ul>
+                                        <li><a href="javascript:void(0)" alt="请选择省份">请选择省份</a></li>
+                                    </ul>
+                                    <input type="hidden" name="cho_Province" id="cho_Province" value="请选择省份">
+                                    <input type="hidden" name="provinceName" id="provinceName">
+                                </span>
+                                <span id="City">
+                                    <i id="citySel">请选择城市</i>
+                                    <ul>
+                                        <li><a href="javascript:void(0)" alt="请选择城市">请选择城市</a></li>
+                                    </ul>
+                                    <input type="hidden" name="cho_City" id="cho_City" value="请选择城市">
+                                    <input type="hidden" name="cityName" id="cityName">
+                                </span>
+                                <span id="Area">
+                                    <i id="areaSel">请选择地区</i>
+                                    <ul>
+                                        <li><a href="javascript:void(0)" alt="请选择地区" >请选择地区</a></li>
+                                    </ul>
+                                    <input type="hidden" name="cho_Area" id="cho_Area" value="请选择地区">
+                                    <input type="hidden" name="areaName" id="areaName" >
+                                </span>
+                            </div>
+                        </div>
+                        <div class="item  detailedInformation">
+                            <label><i class="sign">*</i>细地址:</label>
+                            <textarea name="addressDetail" id="addressDetail" cols="30" rows="10" placeholder="请输入街道等详细地址"></textarea>
+                        </div>
+                        <button type="submit" id="submitBtn" hidden="hidden">提交</button>
+                    </form>
+                </div>
+            </div>
+            <div class="save">
+                <a href="javascript:void(0)">保存
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="theme-popover-mask"></div>
+</main>
+<script>
+    var cur_edit = '';// 1管理,编辑 ,, 2兑换编辑
+
+    $.validator.setDefaults({
+        highlight:function(e) {
+            //$(e).closest(".identical").find().removeClass("has-success").addClass("has-error")
+            $(e).next().removeClass("errorMsgHide")//.addClass("errorMsgShow")
+        },
+        success:function(e) {
+            //e.closest(".identical").removeClass("has-error").addClass("has-success")},
+            e.next().addClass("errorMsgHide");//removeClass("errorMsgShow").addClass("errorMsgHide")
+        },
+        errorElement:"span",
+        errorPlacement:function(e,r){
+            e.appendTo(r.parent())// r.is(":radio")||r.is(":checkbox")?r.parent().next():r.parent()
+        }
+        //     ,
+        // errorClass:"help-block m-b-none",validClass:"help-block m-b-none"
+    });
+
+    jQuery(document).ready(function ($) {
+        var memberGiftId = '';
+
+        // 收货地址管理
+        $('.address a').bind('click', function () {
+            cur_edit = '1';
+
+            $('.theme-popover-mask').fadeOut(100);
+            $('.manageAddress').slideDown(200);
+
+            $.ajax({
+                url: "/member/address/page",
+                type: "get",
+                data: {},
+                dataType: "json",
+                success: function(data) {
+                    if( data.code == true ){
+                        var html = '', al = data.data;
+                        $.each(al, function(ind, val){
+                            console.log(val.addressId);
+                            html += addAddressLine(val);
+                        });
+                        $("#addressList").html("");
+                        $("#addressList").append(html);
+                    }else{
+                        layer.msg(data.msg || '获取发货地址失败', {icon: 5});
+                    }
+                }
+            });
+
+        });
+        $('.add a').bind('click', function () {
+            $('.manageAddress').slideUp(200);
+            $('.addAddress').slideDown(200);
+            $("#provSel").text("请选择省份");
+            $("#citySel").text("请选择城市");
+            $("#areaSel").text("请选择地区");
+            $("#addAddressForm")[0].reset();
+        });
+        $('.save a').bind('click', function () {
+            console.log('00')
+                /*提交表单数据*/
+            $("#submitBtn").click();
+            // 在form提交成功后 隐藏窗口
+            /*$('.theme-popover-mask').fadeOut(100);
+            $('.addAddress').slideUp(200);
+            $('.manageAddress').slideDown(200);*/
+        });
+        // $('.btn').each(function (i, v) {
+        //     $(this).bind('click', function () {
+        //         console.log($(this).eq(i))
+        //         console.log($(this).parents('td').children().text())
+        //
+        //     })
+        // });
+
+        // $('.addressSelect ul li').each(function (i, v) {
+            $('.addressSelect ul li').live('click', function () {
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+        $('.goodsAddress .nextBtn a').bind('click', function () {
+            /*数据请求*/
+            // 兑换奖励
+            console.log(memberGiftId + '===============')
+            if(null == memberGiftId || '' == memberGiftId){
+                layer.msg("操作错误");
+                return;
+            }
+
+            var selAddress = $('.addressSelect ul li.active');
+            if(!selAddress || null == selAddress){
+                layer.msg("请首先增加收货地址");
+                return;
+            }
+            var selAddressId = selAddress.data("addressid");
+            if(!selAddressId || null == selAddressId){
+                layer.msg("请首先增加收货地址");
+                return;
+            }
+
+            $.ajax({
+                url: "/member/gift/exchange/" + memberGiftId + "/" + selAddressId,
+                type: "get",
+                data: {},
+                dataType: "json",
+                success: function(data) {
+                    if( data.code == true ){
+                        console.log('0');
+                        $('.goodsAddress').slideUp(200);
+                        $('.conversionSucceed').slideDown(200);
+                    }else{
+                        layer.msg(data.msg || '获取发货地址失败', {icon: 5});
+                    }
+                }
+            });
+        })
+        // });
+        $('.conversionSucceedInfo .confirm a').bind('click', function () {
+            $('.theme-popover-mask').fadeOut(100);
+            $('.conversionSucceed').slideUp(200);
+            window.location.reload();
+        });
+        // 点击兑换
+        $('.conversion').click(function () {
+            $('.theme-popover-mask').fadeIn(100);
+            $('.goodsAddress').slideDown(200);
+
+            cur_edit = '2';
+            memberGiftId = "";
+            memberGiftId = $(this).data("membergiftid");
+
+            // get address
+            $.ajax({
+                url: "/member/address/page",
+                type: "get",
+                data: {},
+                dataType: "json",
+                success: function(data) {
+                    if( data.code == true ){
+                        var html = '', al = data.data;
+                        $.each(al, function(ind, val){
+                            console.log(val.addressId);
+                            html += addAddressLine(val);
+                        });
+                        $("#showAddressList").html("");
+                        $("#showAddressList").append(html);
+                        // 获取第一个元素
+                        $("#showAddressList").children(":first").addClass("active");
+                    }else{
+                        layer.msg(data.msg || '获取发货地址失败', {icon: 5});
+                    }
+                }
+            });
+
+        });
+        $('.theme-poptit .close').click(function () {
+
+            $('.theme-popover-mask').fadeOut(100);
+
+            $('.goodsAddress').slideUp(200);
+            $('.manageAddress').slideUp(200);
+            $('.addAddress').slideUp(200);
+        });
+
+
+        // add address form validate
+        // 手机号码验证
+        jQuery.validator.addMethod("isMobile", function(value, element) {
+            var length = value.length;
+            var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+            return this.optional(element) || (length == 11 && mobile.test(value));
+        }, "请正确填写您的手机号码");
+
+        var e= "" ;// <i class='fa fa-times-circle'></i> ";
+        $("#addAddressForm").validate({
+            rules:{
+                contactName:{required:!0},
+                contactPhone:{required:!0,
+                    isMobile : true
+                },
+                /*provinceName:{required:!0},
+                cityName:{required:!0},
+                areaName:{required:!0},*/
+                addressDetail:{required: !0}
+            },
+            messages:{
+                contactName:{required:"请填写联系人姓名"},
+                contactPhone:{required:e+"请输入手机号", isMobile : "请正确填写手机号码"},
+                // provinceName:{required:e+"请选择省份"},
+                // cityName:{required:e+"请选择城市"},
+                // areaName:{required:e+"请选择区域"},
+                addressDetail:{required: "请填写详细地址"}
+            },
+            submitHandler:function(form){
+               var form1 = $('#addAddressForm'), prev = $('input[name=cho_Province]' , form1), city = $('input[name=cho_City]' , form1),
+                    area = $('input[name=cho_Area]' , form1), vale = ['请选择省份','请选择城市','请选择地区'];
+                if(prev.val() == vale[0]){
+                    layer.msg(vale[0]);
+                    return false;
+                };
+                if(city.val() == vale[1]){
+                    layer.msg(vale[1]);
+                    return false;
+                };
+                if(area.val() == vale[2]){
+                    layer.msg(vale[2]);
+                    return false;
+                }
+                $("#provinceName").val(prev.val());
+                $("#cityName").val(city.val());
+                $("#areaName").val(area.val());
+
+                //form.submit();
+                //ajax
+                $(form).ajaxSubmit({
+                    dataType:"json",
+                    success:function( jsondata ){
+                        if( jsondata.code == true ){
+                            // addressId jsondata.msg
+                            // document.getElementById("backBtn").click();
+
+                            var fv = {id: jsondata.msg.split("_")[0], addressId: jsondata.msg.split("_")[1], contactName: $("#contactName").val(), contactPhone: $("#contactPhone").val(),
+                                        provinceName: prev.val(), cityName: city.val(), areaName: area.val(), addressDetail: $("#addressDetail").val()};
+
+                            var newHtml = addAddressLine(fv);
+                            // 增加一列地址
+                            $('.addAddress').slideUp(200);
+                            // 地址管理 保存
+                            if('1' == cur_edit){
+                                console.log('1');
+                                // $('.theme-popover-mask').fadeOut(100);
+                                $('.manageAddress').slideDown(200);
+                                //修改时先删除
+                                var id = $('#addAddressForm').find("#id").val();
+                                if(id && '' != id){
+                                    $("#addressList .M_" + jsondata.msg.split("_")[1]).remove();
+                                }
+
+                                $("#addressList").append(newHtml);
+                            }else if('2' == cur_edit){// 兑换, 保存
+                                console.log('2');
+                                // $('.theme-popover-mask').fadeIn(100);
+                                $('.goodsAddress').slideDown(200);
+                                $("#showAddressList .M_" + jsondata.msg.split("_")[1]).remove();
+                                $("#showAddressList").append(newHtml);
+                                // 默认选择第一个
+                                $("#showAddressList").children(":first").addClass("active");
+                            }
+
+
+                        }else{
+                            layer.msg(jsondata.msg || '保存地址失败', {icon: 5});
+                        }
+                    }
+                });
+
+            }
+        });
+
+        function addAddressLine(fv){
+            return "<li class=\"clearfix addressList M_"+fv.addressId+" \" data-addressid=\""+fv.addressId+"\" >\n" +
+                "                        <div class=\"address\">\n" +
+                "                            <h4>\n" +
+                "                                <span class=\"linkmanName\" >"+ fv.contactName+"</span>\n" +
+                "                                <span class=\"userPhone\" >"+fv.contactPhone+"</span>\n" +
+                "                            </h4>\n" +
+                "                            <p>地址:<span class=\"linkmanAddress\" >"+  fv.addressDetail +"</span></p>\n" + //fv.provinceName + fv.cityName + fv.areaName +
+                "                        </div>\n" +
+                "                        <div class=\"operation\">\n" +
+                "                            <a href=\"javascript:void(0)\" onclick=\"editAddress(this)\" data-id=\""+fv.id+"\" data-addressId=\""+fv.addressId+"\" data-contactname=\""+fv.contactName+"\"" +
+                "                               data-contactphone=\""+fv.contactPhone+"\" data-provincename=\""+fv.provinceName+"\" data-cityname=\""+fv.cityName+"\" data-areaname=\""+fv.areaName+"\"" +
+                "                               data-addressdetail=\""+fv.addressDetail+"\">\n" +
+                "                                <img src=\"\" alt=\"编辑\">\n" +
+                "                            </a>\n" +
+                "                            <a href=\"javascript:void(0)\" onclick=\"deleteAddress(this)\" data-id=\""+fv.id+"\">\n" +
+                "                                <img src=\"\" alt=\"删除\">\n" +
+                "                            </a>\n" +
+                "                        </div>\n" +
+                "                    </li>"
+        }
+
+    });
+
+    function deleteAddress(_this){
+        var id = $(_this).data('id');
+        console.log(id);
+        if(!id){
+            layer.msg('地址删除失败', {icon: 5});
+            return;
+        }
+        $.ajax({
+            url: "/member/address/delete/" + id,
+            type: "post",
+            data: {},
+            dataType: "json",
+            success: function(data) {
+                if( data.code == true ){
+                    $(_this).closest(".addressList").remove();
+                    // document.getElementById("backBtn").click();
+                }else{
+                    layer.msg(data.msg || '地址删除失败', {icon: 5});
+                    console.log("地址删除成功");
+                }
+            }
+        })
+    }
+    function editAddress(_this){
+
+        $("#addAddressForm")[0].reset();
+
+        var data = $(_this).data();
+        if(!data){
+            layer.msg('获取地址信息失败', {icon: 5});
+            return;
+        }
+
+        $('.manageAddress').slideUp(200);
+        $('.addAddress').slideDown(200);
+
+        console.log(data);
+        var _form = $("#addAddressForm");
+        _form.find("#id").val(data.id);
+        _form.find("#addressId").val(data.addressid);
+        _form.find("#contactName").val(data.contactname);
+        _form.find("#contactPhone").val(data.contactphone);
+        _form.find("#addressDetail").val(data.addressdetail);
+        _form.find("#provinceName").val(data.provincename);
+        _form.find("#cityName").val(data.cityname);
+        _form.find("#areaName").val(data.areaname);
+        _form.find("#cho_Province").val(data.provincename);
+        _form.find("#cho_City").val(data.cityname);
+        _form.find("#cho_Area").val(data.areaname);
+        _form.find("#provSel").text(data.provincename);
+        _form.find("#citySel").text(data.cityname);
+        _form.find("#areaSel").text(data.areaname);
+
+    }
+</script>
+</body>
+</html>

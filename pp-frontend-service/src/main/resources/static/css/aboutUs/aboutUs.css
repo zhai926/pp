@@ -1,0 +1,157 @@
+body{
+    background: #F6F6F6;
+}
+main .pic{
+    margin-bottom: 40px;
+}
+main .pic{
+    width: 100%;
+}
+main .pic img{
+    width: 100%;
+}
+.main-page .left {
+    width: 240px;
+    /*padding-right: 25px;*/
+    /*border-right: 1px #999 solid;*/
+    /*margin-top: 280px*/
+    background: #EEEEEE;
+}
+
+.main-page .left, .main-page .right {
+    float: left;
+}
+
+.main-page .nav-back {
+    height: 0.1px;
+}
+
+.main-page .nav {
+    position: relative;
+    /*margin-top: -300px;*/
+    width: 240px;
+    height: 800px;
+    text-align: center;
+    font-size: 18px;
+    color: #22436E;
+}
+
+.main-page .nav div {
+    height: 72px;
+    line-height: 72px;
+    /*margin-bottom: 8px;*/
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.main-page .nav div.on {
+    background: #ffffff;
+}
+
+.main-page .right {
+    width: 960px;
+    /*height: 800px;*/
+    /*margin-left: 55px;*/
+}
+
+.main-page .content {
+    position: relative;
+    width: 987px;
+    height: 800px;
+    overflow: hidden;
+}
+
+.main-page .content .con-ggh {
+    padding: 30px;
+    width: 987px;
+    height: 800px;
+    line-height: 24px;
+    background: #FFFFFF;
+}
+
+.con-ggh ul {
+    padding-top: 20px;
+    display: block
+}
+
+.con-ggh ul li {
+    padding-top: 20px;
+    margin-right: 20px;
+    float: left
+}
+
+.list-pic {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 19px;
+    width: 110px;
+    height: 110px;
+    border: 1px solid rgba(255, 255, 255, .2);
+}
+
+.list-pic img {
+    width: 110px;
+    height: 110px;
+    display: block
+}
+
+.con-ggh .item-name {
+    padding: 20px 0;
+    height: 20px;
+    width: 150px;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+    line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.b-intro {
+    margin-top: 20px
+}
+
+.b-intro span {
+    font-size: 24px;
+    margin-bottom: 12px;
+    color: #fff
+}
+
+.b-intro p {
+    width: 545px;
+    height: 45px;
+    line-height: 24px;
+    overflow: hidden;
+    color: #fff;
+    font-size: 14px
+}
+
+.ck-m {
+    width: 123px;
+    height: 36px;
+    line-height: 36px;
+    border: 1px #fff solid;
+    margin-top: 25px
+}
+
+.zcinfo {
+    width: 550px;
+    margin-top: 280px
+}
+
+.ptpic-dl, .ptpic-dl img {
+    width: 354px;
+    height: 690px
+}
+
+.ptpic-dl {
+    margin-top: 110px
+}
+
+.b-intro a {
+    color: aliceblue
+}
+
+.ck-m:hover {
+    border: 1px solid #E06264;
+}

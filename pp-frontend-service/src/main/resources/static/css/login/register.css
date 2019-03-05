@@ -1,0 +1,19 @@
+.loginOperation span{
+    color: red;
+    font-size: 12px;
+}
+.btn .clause{
+    padding-top: 10px;
+}
+.btn .clause input{
+    width: 10px;
+    height: 10px;
+}
+.btn ul{
+    display: flex;
+    justify-content: flex-end;
+}
+.btn .loginBtn{
+    background: #EEEEEE;
+    color: #999999;
+}

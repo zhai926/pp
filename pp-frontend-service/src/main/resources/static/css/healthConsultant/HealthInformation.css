@@ -1,0 +1,14 @@
+body {
+    background: #F6F6F6;
+}
+
+main nav {
+    padding: 20px 0;
+}
+main nav span{
+    color: #777777;
+    font-size: 14px;
+}
+main nav span:last-child{
+    color: #999999;
+}

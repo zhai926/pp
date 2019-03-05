@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改成功</title>
+    <link rel="stylesheet" href="../../css/reset.css"/>
+    <link rel="stylesheet" href="../../css/header/header.css"/>
+    <link rel="stylesheet" href="../../css/login/modifySuccessfully.css"/>
+    <script src="../../js/jquery-1.8.3.js"></script>
+</head>
+<body>
+<header>
+    <div class="inner1 clearfix">
+        <div class="logo">
+            <img src="../../img/logo.png" alt="">
+        </div>
+        <div class="nav">
+            <ul class="clearfix">
+                <li>
+                    <a th:href="@{/}">首页</a>
+                </li>
+                <li>
+                    <a href="https://puritan.tmall.hk/p/rd663629.htm?ali_trackid=42_7b0e34ba50a8e2fbc3d5a69695f31c69" >在线商城</a>
+                </li>
+                <li>
+                    <a th:href="@{/article/healthy}">健康顾问</a>
+                </li>
+                <li>
+                    <a href="./article/about_us" >关于我们</a>
+                </li>
+                <li>
+                    <a class="mini_code" >防伪查询</a>
+                </li>
+            </ul>
+        </div>
+        <div class="loginInfo">
+            <ul class="clearfix">
+                <li>
+                    <a class="login" href="../login/login.html">登陆</a>
+                </li>
+                <li>
+                    <a th:href="@{/register}">注册</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<main class="inner">
+    <div class="modifySuccessfully">
+        <img src="" alt="成功">
+        <span id="time">您的新密码已经修改成功!5秒后为您跳转至<a href="../login/login.html">登录</a>页面</span>
+    </div>
+</main>
+<script>
+    //定义函数myClose关闭当前窗口
+    function myClose() {
+        //将id为time的元素的内容转为整数，保存在变量n中
+        var n = parseInt(time.innerHTML);
+        n--;//将n-1
+        //如果n==0,关闭页面
+        //否则, 将n+秒钟后自动关闭，再保存回time的内容中
+        if (n > 0) {
+            time.innerHTML = n + "秒钟后自动跳转到登录页面！";
+            timer = setTimeout(myClose, 5000);
+        } else {
+            location.href = '../login/login.html';
+        }
+    }
+
+    var timer = null;
+    //当页面加载后，启动周期性定时器，每个1秒执行myClose
+    window.onload = function () {
+        timer = setTimeout(myClose, 5000);
+    }
+</script>
+</body>
+</html>

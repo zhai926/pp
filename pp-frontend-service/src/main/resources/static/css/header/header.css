@@ -1,0 +1,129 @@
+/*
+header
+*/
+header {
+    height: 102px;
+    background: #ffffff;
+}
+
+header .inner1 .logo {
+    float: left;
+    padding-top: 26px;
+}
+
+header .inner1 .logo img {
+    width: 223px;
+    height: 60px;
+}
+
+header .inner1 .nav {
+    float: left;
+}
+
+header .inner1 .nav ul li {
+    float: left;
+}
+
+header .inner1 .loginInfo {
+    float: left;
+}
+
+header .inner1 .loginInfo ul li {
+    float: left;
+}
+
+header .inner1 .nav {
+    padding-left: 41px;
+}
+
+header .inner1 .nav ul {
+    padding-top: 61px;
+}
+
+header .inner1 .nav ul li {
+    padding-left: 77px;
+    text-decoration: none;
+}
+
+header .inner1 .nav ul li a {
+    font-size: 20px;
+    color: #4A4A4A;
+}
+
+header .inner1 .nav ul li:first-child {
+    padding-left: 0;
+}
+
+header .inner1 .loginInfo {
+    padding-left: 180px;
+    padding-top: 63px;
+}
+
+header .inner1 .loginInfo ul li {
+    width: 70px;
+    text-align: center;
+}
+
+header .inner1 .loginInfo ul li a {
+    font-size: 18px;
+    color: #4A4A4A;
+}
+
+header .inner1 .loginInfo ul li:first-child {
+    border-right: 1px solid #C9C9C9;
+}
+
+header .inner1 .loginInfo ul li .login {
+    color: #22436E;
+    font-size: 18px;
+    font-weight: bolder;
+}
+.activeNav{
+    color: #20426F!important;
+}
+
+
+.mask{
+    position: fixed;
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    top:0;
+    left:0;
+    bottom:0;
+    display: none;
+	z-index:1000;
+}
+
+.mask_content{
+    padding: 20px;
+    position: absolute;
+    background: white;
+    width: 285px;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 4px;
+    text-align: center;
+}
+
+
+.cancel_mask{
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    line-height: 20px;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+	cursor:pointer;
+}
+.mask_title{
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+.mask_code img{
+    width: 200px;
+    height: 200px;
+	margin-bottom: 25px;
+}

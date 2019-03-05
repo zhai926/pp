@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>普丽普莱--中国唯一的官网</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/css/header/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/index.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{http://www.jq22.com/jquery/bootstrap-3.3.4.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.min.css}">
+    <script th:src="@{/js/jquery-1.8.3.js}"></script>
+    <script th:src="@{/js/index.js}"></script>
+    <script th:src="@{/js/plugins/layer/layer.js}"></script>
+    <style>
+        .test-btn {
+            margin: 50px 100px;
+        }
+
+    </style>
+</head>
+<body class="HolyGrail">
+<header>
+    <div class="inner1 clearfix">
+        <div class="logo">
+			<a href="/index">
+				<img th:src="@{/img/logo.png}" alt="">
+			</a>
+        </div>
+        <div class="nav">
+            <ul class="clearfix">
+                <li>
+                    <a th:href="@{/}" class="activeNav">首页</a>
+                </li>
+                <li>
+                    <a href="https://puritan.tmall.hk/p/rd663629.htm?ali_trackid=42_7b0e34ba50a8e2fbc3d5a69695f31c69" >在线商城</a>
+                </li>
+                <li>
+                    <a th:href="@{/article/healthy}">健康顾问</a>
+                </li>
+                <li>
+                    <a href="./article/about_us" >关于我们</a>
+                </li>
+                <li>
+                    <a class="mini_code" >防伪查询</a>
+                </li>
+            </ul>
+        </div>
+        <div class="loginInfo">
+            <ul class="clearfix">
+                <th:block th:if="${null != PPM}">
+                    <li style="width: auto;">
+                        <a th:href="@{/member/center}" th:text="${#strings.substring(PPMM,0,3) + '***' + #strings.substring(PPMM,6,11)}">Admin</a><!-- #strings.substring(PPMM,0,3) + '******' + #strings.substring(PPMM,6,11)} -->
+                    </li>
+                    <li>
+                        <a th:href="@{/login/logout}">退出</a>
+                    </li>
+                </th:block>
+                <th:block th:unless="${null != PPM}">
+                    <li>
+                        <a class="login" th:href="@{/login}">登陆</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/register}">注册</a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="slider" id="slider">
+    <div class="slider-inner">
+        <div class="item" th:each="rotate: ${rotateList}">
+            <a th:href="@{${rotate.url}}" ><img class="img" th:style="${'background: url(/file/img/'+rotate.fileId+');'}"></a>
+        </div>
+
+        <!--<div class="item">-->
+            <!--<a href="./receiveAward/receiveAward.html"><img class="img" style="background: url('../img/slide_4.jpg');"></a>-->
+
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<a href="./receiveAward/receiveAward.html"><img class="img" style="background: url('../img/slide_5.jpg');"></a>-->
+
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<a href="./receiveAward/receiveAward.html"><img class="img" style="background: url('../img/slide_6.jpg');"></a>-->
+
+        <!--</div>-->
+    </div>
+</div>
+<div class="HolyGrail-body inner">
+    <main class="HolyGrail-content">
+        <div class="content">
+            <ul class="clearfix">
+                <li th:each="ggl: ${goodsGiftList.list}">
+                    <a href="javascript:void(0)">
+                        <img th:src="@{${'/file/img/' + ggl.fileId}}" alt="加载失败">
+                    </a>
+                </li>
+                <!--<li>
+                    <a href="javascript:void(0)">
+                        <img th:src="@{/img/pic.jpg}" alt="加载失败">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <img th:src="@{/img/pic.jpg}" alt="加载失败">
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <img th:src="@{/img/pic.jpg}" alt="加载失败">
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+    </main>
+</div>
+<footer class="inner" style="
+    width: 100%;
+">
+    <div class="footer clearfix">
+
+        <div class="right" style="
+    width: 100%;
+    padding-left: 0;
+    text-align: center;
+">
+            <div class="interlinkage">
+                <p>如遇到任何问题,请拨打400-700-6868|请到正规渠道或<a href="https://puritan.tmall.hk/p/rd663629.htm?ali_trackid=42_7b0e34ba50a8e2fbc3d5a69695f31c69">普丽普莱在线商店</a>购买产品</p>
+            </div>
+            <div class="relevance clearfix">
+
+                <div class="relevanceNav" style="
+    padding-left: 0;
+    width: 100%;
+">
+                    <ul class="clearfix" style="
+    display: flex;
+    justify-content: center;
+">
+                        <!-- <li>
+                            <a th:href="@{/article/healthy}">养生堂资讯</a>
+                        </li> -->
+                        <li>
+                            <a href="/article/about_us">企业简介</a>
+                        </li>
+                        <li>
+                            <a href="/article/about_us">企业招聘</a>
+                        </li>
+                        <!-- <li>
+                            <a th:href="@{/article/about_us}">网站地图</a>
+                        </li> -->
+                        <li>
+                            <a href="/article/about_us">联系我们</a>
+                        </li>
+                        <!-- <li>
+                            <a href="javascript:void(0)">兄弟公司-农夫山泉</a>
+                        </li> -->
+                    </ul>
+                    <p class="putRecords" id="putRecords" style="
+    text-align: center;
+">琼ICP备14002124号-1 版权所有@2015普丽普莱.保留所有版权</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<div class="mask">
+    <div class="mask_content">
+        <div class="cancel_mask">x</div>
+        <div class="mask_title">
+            扫码进入
+        </div>
+        <div class="mask_code">
+            <img src="/img/wx_mini_code.png" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="operation">
+    <ul>
+        <li class="service">
+            客服
+            <div class="more-info">
+                <div>
+                    <p>021-61132270</p>
+                    <p>pp-marketing@ecmoho.com</p>
+                </div>
+            </div>
+        </li>
+        <li class="feedback" onclick="modalShow('#bigModal', '', modalDataInit('test'));">反馈</li>
+    </ul>
+</div>
+<div class="modal bs-example-modal-lg" id="bigModal"><!-- onclick="modalHide('#bigModal', '');" -->
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" onclick="modalHide('#bigModal', '');" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">您有什么问题或建议想对我们说?</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="theme">
+                        <label for="themeInfo">您的主题:</label>
+                        <input type="text" value="" id="themeInfo"/>
+                    </div>
+                    <div class="proposal">
+                        <textarea placeholder="请留下您的建议我们会认真评估" id="themeText"></textarea>
+                    </div>
+                    <div class="btn">
+                        <a href="javascript:void (0)" id="msgSubmit">留言提交</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $().ready(function() {
+        var putRecords = document.getElementById('putRecords');
+        var hrefStr = location.origin+'';
+        if(hrefStr.indexOf('cn') > -1){
+	        //putRecords.innerHTML = '沪ICP备14010774号-1 版权所有@2015普丽普莱.保留所有版权'
+			putRecords.innerHTML = '版权所有@2015普丽普莱.保留所有版权'
+        }else{
+	        //putRecords.innerHTML = '琼ICP备14002124号-1 版权所有@2015普丽普莱.保留所有版权'
+			putRecords.innerHTML = '版权所有@2015普丽普莱.保留所有版权'
+        }
+        $("#msgSubmit").bind('click', function(){
+            var themeInfo = $("#themeInfo").val(), themeText = $("#themeText").val();
+            if(null == themeInfo || '' == themeInfo){
+                layer.msg("请留下您的反馈主题！");
+                return;
+            }
+            if(null == themeText || '' == themeText){
+                layer.msg("请留下您的建议！");
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/message/save',
+                data: {title: themeInfo, content: themeText},
+                async: false,
+                dataType: 'json',
+                success: function (jsondata) {
+                    if( jsondata.code == true ){
+                        layer.msg("感谢您的反馈，我们会认证评估！",function(){});
+                        modalHide('#bigModal', '');
+                    }else{
+                        layer.msg(jsondata.msg || '请您再次反馈！', {icon: 5});
+                    }
+                },
+                error: function () {
+                    //
+                    layer.msg("系统异常，请联系管理员！",function(){});
+                }
+            });
+        });
+
+        $(".mini_code").click(function(){
+            $(".mask").show()
+        })
+
+        $(".cancel_mask").click(function(){
+            $(".mask").hide()
+        })
+
+
+        $('.antiFake a').bind('click', function () {
+            var antiFakeValue = $('#antiFakeValue').val();
+            if(null == antiFakeValue || '' == antiFakeValue){
+                layer.msg("请填写防伪码！",function(){});
+                return;
+            }
+            antiFakeValue = antiFakeValue.replace(/\s/g, "");
+            if(antiFakeValue.length != 18){
+                $("#antiFakeValue").val(antiFakeValue);
+                layer.msg("请正确填写防伪码！",function(){});
+                return;
+            }
+
+            /*数据请求*/
+            layer.msg("哇哦！你买的是正品哦！！！",function(){});
+            $("#antiFakeValue").val("");
+        });
+
+
+
+
+    });
+
+
+    $('#slider').Slider();
+    var str1 = '<p class="sign1"><span>1</span></p>';
+    var str2 = '<p class="sign2"><span>2</span></p>';
+    var str3 = '<p class="sign3"><span>3</span></p>';
+    $('.content ul li:eq(0) a').append(str1);
+    $('.content ul li:eq(1) a').append(str2);
+    $('.content ul li:eq(2) a').append(str3)
+    /*模态框*/
+    //animate.css动画触动一次方法
+    $.fn.extend({
+        animateCss: function (animationName) {
+            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            this.addClass('animated ' + animationName).one(animationEnd, function () {
+                $(this).removeClass('animated ' + animationName);
+            });
+        }
+    });
+    /**
+     * 显示模态框方法
+     * @param targetModel 模态框选择器，jquery选择器
+     * @param animateName 弹出动作
+     * @ callback 回调方法
+     */
+    var modalShow = function (targetModel, animateName, callback) {
+        $("#themeInfo").val("");
+        $("#themeText").val("");
+
+        var animationIn = ["bounceIn", "bounceInDown", "bounceInLeft", "bounceInRight", "bounceInUp",
+            "fadeIn", "fadeInDown", "fadeInLeft", "fadeInRight", "fadeOutUp",
+            "fadeInDownBig", "fadeInLeftBig", "fadeOutRightBig", "fadeOutUpBig", "flipInX", "flipInY",
+            "lightSpeedIn", "rotateIn", "rotateInDownLeft", "rotateInDownRight", "rotateInUpLeft", "rotateInUpRight",
+            "zoomIn", "zoomInDown", "zoomInLeft", "zoomInRight", "zoomInUp", "slideInDown", "slideInLeft",
+            "slideInRight", "slideInUp", "rollIn"];
+        if (!animateName || animationIn.indexOf(animateName) == -1) {
+            var intRandom = Math.floor(Math.random() * animationIn.length);
+            animateName = animationIn[intRandom];
+        }
+        $(targetModel).show().animateCss(animateName);
+        callback.call(this);
+    }
+    /**
+     * 隐藏模态框方法
+     * @param targetModel 模态框选择器，jquery选择器
+     * @param animateName 隐藏动作
+     * @ callback 回调方法
+     */
+    var modalHide = function (targetModel, animateName, callback) {
+        var animationOut = ["bounceOut", "bounceOutDown", "bounceOutLeft", "bounceOutRight", "bounceOutUp",
+            "fadeOut", "fadeOutDown", "fadeOutLeft", "fadeOutRight", "fadeOutUp",
+            "fadeOutDownBig", "fadeOutLeftBig", "fadeOutRightBig", "fadeOutUpBig", "flipOutX", "flipOutY",
+            "lightSpeedOut", "rotateOut", "rotateOutDownLeft", "rotateOutDownRight", "rotateOutUpLeft", "rotateOutUpRight",
+            "zoomOut", "zoomOutDown", "zoomOutLeft", "zoomOutRight", "zoomOutUp",
+            "zoomOut", "zoomOutDown", "zoomOutLeft", "zoomOutRight", "zoomOutUp", "slideOutDown", "slideOutLeft",
+            "slideOutRight", "slideOutUp", "rollOut"];
+        if (!animateName || animationOut.indexOf(animateName) == -1) {
+            var intRandom = Math.floor(Math.random() * animationOut.length);
+            animateName = animationOut[intRandom];
+        }
+        $(targetModel).children().click(function (e) {
+            e.stopPropagation()
+        });
+        $(targetModel).animateCss(animateName);
+        $(targetModel).delay(900).hide(1, function () {
+            $(this).removeClass('animated ' + animateName);
+        });
+        callback.call(this);
+    };
+
+    var modalDataInit = function (info) {
+        // alert(info);
+        //填充数据，对弹出模态框数据样式初始化或修改
+    }
+</script>
+</body>
+</html>

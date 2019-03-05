@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="comm/page">
+<body>
+<div th:fragment="pager">
+    <div class="text-right" th:with="baseUrl=${#httpServletRequest.getRequestURL().toString()},pars=${#httpServletRequest.getQueryString() eq null ? '' : new String(#httpServletRequest.getQueryString().getBytes('iso8859-1'), 'UTF-8')}">
+        <ul style="margin:0px;" class="pagination" th:with="newPar=${new String(pars eq null ? '' : pars).replace('page='+(page.pageNum), '')},
+                                                curTmpUrl=${baseUrl+'?'+newPar},
+                                                curUrl=${curTmpUrl.endsWith('&') ? curTmpUrl.substring(0, curTmpUrl.length()-1):curTmpUrl}" >
+            <!--<li th:text="${pars}"></li>-->
+
+            <li><a th:href="@{${curUrl}(page=1)}">首页</a></li>
+            <li th:if="${page.isHasPreviousPage()}"><a th:href="@{${curUrl}(page=${page.pageNum-1})}">上一页</a></li>
+
+            <!--总页数小于等于10-->
+            <div th:if="${(page.pages le 10) and (page.pages gt 0)}" th:remove="tag">
+                <div th:each="pg : ${#numbers.sequence(1, page.pages)}" th:remove="tag">
+                        <span th:if="${pg eq page.getPageNum()}" th:remove="tag">
+                            <li class="active"><span class="current_page line_height" th:text="${pg}">${pageNumber}</span></li>
+                        </span>
+                    <span th:unless="${pg eq page.getPageNum()}" th:remove="tag">
+                            <li><a th:href="@{${curUrl}(page=${pg})}" th:text="${pg}"></a></li>
+                        </span>
+                </div>
+            </div>
+
+            <!-- 总数数大于10时 -->
+            <div th:if="${page.pages gt 10}" th:remove="tag">
+                <li th:if="${page.getPageNum()-2 gt 0}"><a th:href="@{${curUrl}(page=${page.getPageNum()}-2)}" th:text="${page.getPageNum()-2}"></a></li>
+                <li th:if="${page.getPageNum()-1 gt 0}"><a th:href="@{${curUrl}(page=${page.getPageNum()}-1)}" th:text="${page.getPageNum()-1}"></a></li>
+                <li class="active"><span class="current_page line_height" th:text="${page.pageNum}"></span></li>
+                <li th:if="${page.getPageNum()+1 lt page.pages}"><a th:href="@{${curUrl}(page=${page.getPageNum()}+1)}" th:text="${page.getPageNum()+1}"></a></li>
+                <li th:if="${page.getPageNum()+2 lt page.pages}"><a th:href="@{${curUrl}(page=${page.getPageNum()}+2)}" th:text="${page.getPageNum()+2}"></a></li>
+            </div>
+
+
+            <li th:if="${page.isHasNextPage()}"><a th:href="@{${curUrl}(page=${page.nextPage})}">下一页</a></li>
+            <!--<li><a th:href="@{${curUrl}(page=${page.pages-1})}">尾页</a></li>-->
+            <li><a th:href="@{${page.pages le 0 ? curUrl+'page=0':curUrl+'&page='+(page.pages)}}">尾页</a></li>
+            <li><span th:utext="'共'+${page.pages}+'页 / '+${page.total}+' 条'"></span></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

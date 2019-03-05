@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pp.employee.mapper.AdminDeptDomainMapper" >
+  <resultMap id="BaseResultMap" type="com.pp.employee.domain.AdminDeptDomain" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="dept_type" property="deptType" jdbcType="VARCHAR" />
+    <result column="dept_level" property="deptLevel" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="leader_id" property="leaderId" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_code" property="createCode" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="modify_code" property="modifyCode" jdbcType="VARCHAR" />
+    <result column="has_deleted" property="hasDeleted" jdbcType="BIT" />
+
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <resultMap id="FullResultMap" extends="BaseResultMap" type="com.pp.employee.domain.AdminDeptDomain">
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="leader_name" property="leaderName" jdbcType="VARCHAR" />
+    <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, dept_type, dept_level, parent_id, leader_id, description, create_time, 
+    create_code, modify_time, modify_code, has_deleted, company_id
+  </sql>
+  <select id="selectByExample" resultMap="FullResultMap" parameterType="com.pp.employee.domain.AdminDeptDomainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    , parent_name, leader_name, create_name
+    from (
+    select d.*, pd.name parent_name, le.name leader_name, ce.name create_name from t_pp_admin_dept d
+    left join t_pp_admin_dept pd on pd.id = d.parent_id
+    left join t_pp_admin_employee le on le.id = d.leader_id
+    left join t_pp_admin_employee ce on ce.id = d.create_code
+    ) f
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pp_admin_dept
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_pp_admin_dept
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pp.employee.domain.AdminDeptDomain" >
+    insert into t_pp_admin_dept (id, name, dept_type, 
+      dept_level, parent_id, leader_id, 
+      description, create_time, create_code, 
+      modify_time, modify_code, has_deleted, company_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{deptType,jdbcType=VARCHAR}, 
+      #{deptLevel,jdbcType=INTEGER}, #{parentId,jdbcType=VARCHAR}, #{leaderId,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createCode,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyCode,jdbcType=VARCHAR}, #{hasDeleted,jdbcType=BIT},
+      #{companyId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pp.employee.domain.AdminDeptDomain" >
+    insert into t_pp_admin_dept
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="deptType != null" >
+        dept_type,
+      </if>
+      <if test="deptLevel != null" >
+        dept_level,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="leaderId != null" >
+        leader_id,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createCode != null" >
+        create_code,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modifyCode != null" >
+        modify_code,
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="deptType != null" >
+        #{deptType,jdbcType=VARCHAR},
+      </if>
+      <if test="deptLevel != null" >
+        #{deptLevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="leaderId != null" >
+        #{leaderId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createCode != null" >
+        #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyCode != null" >
+        #{modifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hasDeleted != null" >
+        #{hasDeleted,jdbcType=BIT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pp.employee.domain.AdminDeptDomainExample" resultType="java.lang.Integer" >
+    select count(*) from t_pp_admin_dept
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pp.employee.domain.AdminDeptDomain" >
+    update t_pp_admin_dept
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="deptType != null" >
+        dept_type = #{deptType,jdbcType=VARCHAR},
+      </if>
+      <if test="deptLevel != null" >
+        dept_level = #{deptLevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="leaderId != null" >
+        leader_id = #{leaderId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createCode != null" >
+        create_code = #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyCode != null" >
+        modify_code = #{modifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted = #{hasDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pp.employee.domain.AdminDeptDomain" >
+    update t_pp_admin_dept
+    set name = #{name,jdbcType=VARCHAR},
+      dept_type = #{deptType,jdbcType=VARCHAR},
+      dept_level = #{deptLevel,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      leader_id = #{leaderId,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_code = #{createCode,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_code = #{modifyCode,jdbcType=VARCHAR},
+      has_deleted = #{hasDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

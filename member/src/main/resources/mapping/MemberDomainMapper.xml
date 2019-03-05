@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pp.member.mapper.MemberDomainMapper" >
+  <resultMap id="BaseResultMap" type="com.pp.member.domain.MemberDomain" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="member_type" property="memberType" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_nick_name" property="memberNickName" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="id_type" property="idType" jdbcType="CHAR" />
+    <result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="pass_word" property="passWord" jdbcType="VARCHAR" />
+    <result column="pass_word_text" property="passWordText" jdbcType="VARCHAR" />
+    <result column="real_status" property="realStatus" jdbcType="CHAR" />
+    <result column="real_stage" property="realStage" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="create_code" property="createCode" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_code" property="updateCode" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="has_deleted" property="hasDeleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, member_id, member_type, member_name, member_nick_name, real_name, id_type, id_number, 
+    icon, province, city, area, address, email, phone_number, pass_word, pass_word_text,
+    real_status, real_stage, status, remark, ext1, ext2, create_code, create_time, update_code,
+    update_time, has_deleted
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pp.member.domain.MemberDomainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_pp_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pp_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_pp_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pp.member.domain.MemberDomain" >
+    insert into t_pp_member (id, member_id, member_type, 
+      member_name, member_nick_name, real_name, 
+      id_type, id_number, icon, 
+      province, city, area, 
+      address, email, phone_number,
+      pass_word, pass_word_text, real_status,
+      real_stage, status, remark,
+      ext1, ext2, create_code,
+      create_time, update_code, update_time,
+      has_deleted)
+    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=VARCHAR}, #{memberType,jdbcType=VARCHAR}, 
+      #{memberName,jdbcType=VARCHAR}, #{memberNickName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
+      #{idType,jdbcType=CHAR}, #{idNumber,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR},
+      #{passWord,jdbcType=VARCHAR}, #{passWordText,jdbcType=VARCHAR}, #{realStatus,jdbcType=CHAR},
+      #{realStage,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR},
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{createCode,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateCode,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+      #{hasDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pp.member.domain.MemberDomain" >
+    insert into t_pp_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="memberType != null" >
+        member_type,
+      </if>
+      <if test="memberName != null" >
+        member_name,
+      </if>
+      <if test="memberNickName != null" >
+        member_nick_name,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="idType != null" >
+        id_type,
+      </if>
+      <if test="idNumber != null" >
+        id_number,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="passWord != null" >
+        pass_word,
+      </if>
+      <if test="passWordText != null" >
+        pass_word_text,
+      </if>
+      <if test="realStatus != null" >
+        real_status,
+      </if>
+      <if test="realStage != null" >
+        real_stage,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="createCode != null" >
+        create_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateCode != null" >
+        update_code,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberType != null" >
+        #{memberType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNickName != null" >
+        #{memberNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null" >
+        #{idType,jdbcType=CHAR},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null" >
+        #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="passWordText != null" >
+        #{passWordText,jdbcType=VARCHAR},
+      </if>
+      <if test="realStatus != null" >
+        #{realStatus,jdbcType=CHAR},
+      </if>
+      <if test="realStage != null" >
+        #{realStage,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="createCode != null" >
+        #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateCode != null" >
+        #{updateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasDeleted != null" >
+        #{hasDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pp.member.domain.MemberDomainExample" resultType="java.lang.Integer" >
+    select count(*) from t_pp_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pp.member.domain.MemberDomain" >
+    update t_pp_member
+    <set >
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberType != null" >
+        member_type = #{memberType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNickName != null" >
+        member_nick_name = #{memberNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null" >
+        id_type = #{idType,jdbcType=CHAR},
+      </if>
+      <if test="idNumber != null" >
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null" >
+        pass_word = #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="passWordText != null" >
+        pass_word_text = #{passWordText,jdbcType=VARCHAR},
+      </if>
+      <if test="realStatus != null" >
+        real_status = #{realStatus,jdbcType=CHAR},
+      </if>
+      <if test="realStage != null" >
+        real_stage = #{realStage,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="createCode != null" >
+        create_code = #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateCode != null" >
+        update_code = #{updateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted = #{hasDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pp.member.domain.MemberDomain" >
+    update t_pp_member
+    set member_id = #{memberId,jdbcType=VARCHAR},
+      member_type = #{memberType,jdbcType=VARCHAR},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      member_nick_name = #{memberNickName,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      id_type = #{idType,jdbcType=CHAR},
+      id_number = #{idNumber,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      pass_word = #{passWord,jdbcType=VARCHAR},
+      pass_word_text = #{passWordText,jdbcType=VARCHAR},
+      real_status = #{realStatus,jdbcType=CHAR},
+      real_stage = #{realStage,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      create_code = #{createCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_code = #{updateCode,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      has_deleted = #{hasDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

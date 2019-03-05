@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/css/header/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/login/login.css}"/>
+    <script th:src="@{/js/jquery-1.8.3.js}"></script>
+
+    <script th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+    <script th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.form.js}"></script>
+    <script th:src="@{/js/plugins/layer/layer.js}"></script>
+
+    <style>
+        .errorMsgHide{
+            display: none;
+        }
+        .errorMsgShow{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="inner1 clearfix">
+        <div class="logo">
+            <img th:src="@{/img/logo.png}" alt="">
+        </div>
+        <div class="nav">
+            <ul class="clearfix">
+                <li>
+                    <a th:href="@{/}">首页</a>
+                </li>
+                <li>
+                    <a href="https://puritan.tmall.hk/p/rd663629.htm?ali_trackid=42_7b0e34ba50a8e2fbc3d5a69695f31c69" >在线商城</a>
+                </li>
+                <li>
+                    <a th:href="@{/article/healthy}">健康顾问</a>
+                </li>
+                <li>
+                    <a href="./article/about_us" >关于我们</a>
+                </li>
+                <li>
+                    <a class="mini_code" >防伪查询</a>
+                </li>
+            </ul>
+        </div>
+        <div class="loginInfo">
+            <ul class="clearfix">
+                <li>
+                    <a class="login" href="login.html">登陆</a>
+                </li>
+                <li>
+                    <a th:href="@{/register}">注册</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="loginOperation inner">
+        <form id="loginForm" th:action="@{/login/login}" method="post">
+            <input name="validImg" id="validImg" value="Y" hidden="hidden">
+            <div class="title">
+                <h2>会员登陆</h2>
+            </div>
+            <div class="accountNumber identical">
+                <img th:src="@{/img/username.png}" alt="加载失败">
+                <input type="text" name="phone" id="phone" placeholder="请输入您的手机号"/>
+            </div>
+            <div class="password identical">
+                <img th:src="@{/img/password.png}" alt="加载失败">
+                <input type="password" name="password" id="password" placeholder="请输入密码"/>
+            </div>
+            <div class="verificationCode">
+                <img style="width: 70px;cursor: pointer;" th:src="@{/check/make_pic_code}" onclick="this.src='/check/make_pic_code?d='+Math.random();" alt="加载失败">
+                <input type="text" name="img" id="img" placeholder="请输入验证码"/>
+               <!-- <img th:src="@{/check/make_pic_code}" alt="加载失败">-->
+            </div>
+            <div class="btn">
+                <a href="../member/retrievePassword.html" class="forgetPassword">忘记密码?</a>
+                <a href="javascript:void (0)" class="loginBtn">登陆</a>
+                <button type="submit" id="submitBtn" hidden="hidden">提交</button>
+                <ul>
+                    <li>
+                        <input type="radio" class="selfMotion"/>
+                        <a href="javascript:void(0)">下次自动登陆</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/register}">新用户注册</a>
+                    </li>
+                </ul>
+            </div>
+        </form>
+
+    </div>
+</main>
+
+<div class="mask">
+    <div class="mask_content">
+        <div class="cancel_mask">x</div>
+        <div class="mask_title">
+            扫码进入
+        </div>
+        <div class="mask_code">
+            <img src="/img/wx_mini_code.png" alt="">
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script>
+    $.validator.setDefaults({
+        highlight:function(e) {
+            //$(e).closest(".identical").find().removeClass("has-success").addClass("has-error")
+            $(e).next().removeClass("errorMsgHide")//.addClass("errorMsgShow")
+        },
+        success:function(e) {
+            //e.closest(".identical").removeClass("has-error").addClass("has-success")},
+            e.next().addClass("errorMsgHide");//removeClass("errorMsgShow").addClass("errorMsgHide")
+        },
+        errorElement:"span",
+        errorPlacement:function(e,r){
+            e.appendTo(r.parent())// r.is(":radio")||r.is(":checkbox")?r.parent().next():r.parent()
+        }
+        //     ,
+        // errorClass:"help-block m-b-none",validClass:"help-block m-b-none"
+    }),
+
+        $().ready(function(){
+
+            $(".loginBtn").click(function(){
+                $("#submitBtn").click();
+            });
+
+	        $(".mini_code").click(function(){
+		        $(".mask").show()
+	        })
+
+	        $(".cancel_mask").click(function(){
+		        $(".mask").hide()
+	        })
+            // 手机号码验证
+            jQuery.validator.addMethod("isMobile", function(value, element) {
+                var length = value.length;
+                var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+                return this.optional(element) || (length == 11 && mobile.test(value));
+            }, "请正确填写您的手机号码");
+
+            // $("#commentForm").validate();
+            var e= "" ;// <i class='fa fa-times-circle'></i> ";
+            $("#loginForm").validate({
+                rules:{
+                    phone:{required:!0,
+                        minlength:11,
+                        isMobile : true
+                    },
+                    password:{required:!0,minlength:6},
+                    img:{required: !0}
+                },
+                messages:{
+                    phone:{required:e+"请输入手机号",minlength:e+"手机号必须十一个字符以上", isMobile : "请正确填写您的手机号码"},
+                    password:{required:e+"请输入密码",minlength:e+"密码必须六个字符以上"},
+                    img:{required: "请填写图片验证码"}
+                },
+                submitHandler:function(form){
+                    //form.submit();
+                    //ajax
+                    $(form).ajaxSubmit({
+                        dataType:"json",
+                        success:function( jsondata ){
+                            if( jsondata.code == true ){
+                                // document.getElementById("backBtn").click();
+                                window.location.href = "/";
+                            }else{
+                                layer.msg(jsondata.msg || '登录失败', {icon: 5});
+                            }
+                        }
+                    });
+
+                }
+            });
+        });
+
+</script>
+</html>

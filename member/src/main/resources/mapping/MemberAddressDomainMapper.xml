@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pp.member.mapper.MemberAddressDomainMapper" >
+  <resultMap id="BaseResultMap" type="com.pp.member.domain.MemberAddressDomain" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="address_id" property="addressId" jdbcType="VARCHAR" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="default_flag" property="defaultFlag" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="town_code" property="townCode" jdbcType="VARCHAR" />
+    <result column="housepark_code" property="houseparkCode" jdbcType="VARCHAR" />
+    <result column="building_code" property="buildingCode" jdbcType="VARCHAR" />
+    <result column="unit_code" property="unitCode" jdbcType="VARCHAR" />
+    <result column="floor_code" property="floorCode" jdbcType="VARCHAR" />
+    <result column="door_code" property="doorCode" jdbcType="VARCHAR" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="town_name" property="townName" jdbcType="VARCHAR" />
+    <result column="housepark_name" property="houseparkName" jdbcType="VARCHAR" />
+    <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
+    <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+    <result column="floor_name" property="floorName" jdbcType="VARCHAR" />
+    <result column="door_name" property="doorName" jdbcType="VARCHAR" />
+    <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="address_tag" property="addressTag" jdbcType="VARCHAR" />
+    <result column="address_remark" property="addressRemark" jdbcType="VARCHAR" />
+    <result column="order_by" property="orderBy" jdbcType="CHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="create_code" property="createCode" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_code" property="updateCode" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="has_deleted" property="hasDeleted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, member_id, address_id, contact_name, contact_phone, default_flag, status, province_code,
+    city_code, area_code, town_code, housepark_code, building_code, unit_code, floor_code,
+    door_code, province_name, city_name, area_name, town_name, housepark_name, building_name,
+    unit_name, floor_name, door_name, address_detail, address_tag, address_remark, order_by,
+    remark, ext1, ext2, create_code, create_time, update_code, update_time, has_deleted
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pp.member.domain.MemberAddressDomainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_pp_member_address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_pp_member_address
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_pp_member_address
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pp.member.domain.MemberAddressDomain" useGeneratedKeys="true" keyProperty="id">
+    insert into t_pp_member_address (id, member_id, address_id, 
+      contact_name, contact_phone, default_flag,
+      status, province_code, city_code,
+      area_code, town_code, housepark_code,
+      building_code, unit_code, floor_code,
+      door_code, province_name, city_name,
+      area_name, town_name, housepark_name,
+      building_name, unit_name, floor_name,
+      door_name, address_detail, address_tag,
+      address_remark, order_by, remark,
+      ext1, ext2, create_code,
+      create_time, update_code, update_time,
+      has_deleted)
+    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=VARCHAR}, #{addressId,jdbcType=VARCHAR}, 
+      #{contactName,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, #{defaultFlag,jdbcType=CHAR},
+      #{status,jdbcType=CHAR}, #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR},
+      #{areaCode,jdbcType=VARCHAR}, #{townCode,jdbcType=VARCHAR}, #{houseparkCode,jdbcType=VARCHAR},
+      #{buildingCode,jdbcType=VARCHAR}, #{unitCode,jdbcType=VARCHAR}, #{floorCode,jdbcType=VARCHAR},
+      #{doorCode,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR},
+      #{areaName,jdbcType=VARCHAR}, #{townName,jdbcType=VARCHAR}, #{houseparkName,jdbcType=VARCHAR},
+      #{buildingName,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR}, #{floorName,jdbcType=VARCHAR},
+      #{doorName,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{addressTag,jdbcType=VARCHAR},
+      #{addressRemark,jdbcType=VARCHAR}, #{orderBy,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR},
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{createCode,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateCode,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+      #{hasDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pp.member.domain.MemberAddressDomain" useGeneratedKeys="true" keyProperty="id">
+    insert into t_pp_member_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="addressId != null" >
+        address_id,
+      </if>
+      <if test="contactName != null" >
+        contact_name,
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone,
+      </if>
+      <if test="defaultFlag != null" >
+        default_flag,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="provinceCode != null" >
+        province_code,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="townCode != null" >
+        town_code,
+      </if>
+      <if test="houseparkCode != null" >
+        housepark_code,
+      </if>
+      <if test="buildingCode != null" >
+        building_code,
+      </if>
+      <if test="unitCode != null" >
+        unit_code,
+      </if>
+      <if test="floorCode != null" >
+        floor_code,
+      </if>
+      <if test="doorCode != null" >
+        door_code,
+      </if>
+      <if test="provinceName != null" >
+        province_name,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="townName != null" >
+        town_name,
+      </if>
+      <if test="houseparkName != null" >
+        housepark_name,
+      </if>
+      <if test="buildingName != null" >
+        building_name,
+      </if>
+      <if test="unitName != null" >
+        unit_name,
+      </if>
+      <if test="floorName != null" >
+        floor_name,
+      </if>
+      <if test="doorName != null" >
+        door_name,
+      </if>
+      <if test="addressDetail != null" >
+        address_detail,
+      </if>
+      <if test="addressTag != null" >
+        address_tag,
+      </if>
+      <if test="addressRemark != null" >
+        address_remark,
+      </if>
+      <if test="orderBy != null" >
+        order_by,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="createCode != null" >
+        create_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateCode != null" >
+        update_code,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="addressId != null" >
+        #{addressId,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null" >
+        #{defaultFlag,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="townCode != null" >
+        #{townCode,jdbcType=VARCHAR},
+      </if>
+      <if test="houseparkCode != null" >
+        #{houseparkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingCode != null" >
+        #{buildingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitCode != null" >
+        #{unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="floorCode != null" >
+        #{floorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="doorCode != null" >
+        #{doorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="townName != null" >
+        #{townName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseparkName != null" >
+        #{houseparkName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingName != null" >
+        #{buildingName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="floorName != null" >
+        #{floorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doorName != null" >
+        #{doorName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="addressTag != null" >
+        #{addressTag,jdbcType=VARCHAR},
+      </if>
+      <if test="addressRemark != null" >
+        #{addressRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderBy != null" >
+        #{orderBy,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="createCode != null" >
+        #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateCode != null" >
+        #{updateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasDeleted != null" >
+        #{hasDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pp.member.domain.MemberAddressDomainExample" resultType="java.lang.Integer" >
+    select count(*) from t_pp_member_address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pp.member.domain.MemberAddressDomain" >
+    update t_pp_member_address
+    <set >
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="addressId != null" >
+        address_id = #{addressId,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null" >
+        default_flag = #{defaultFlag,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="provinceCode != null" >
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="townCode != null" >
+        town_code = #{townCode,jdbcType=VARCHAR},
+      </if>
+      <if test="houseparkCode != null" >
+        housepark_code = #{houseparkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingCode != null" >
+        building_code = #{buildingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitCode != null" >
+        unit_code = #{unitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="floorCode != null" >
+        floor_code = #{floorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="doorCode != null" >
+        door_code = #{doorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        province_name = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="townName != null" >
+        town_name = #{townName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseparkName != null" >
+        housepark_name = #{houseparkName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingName != null" >
+        building_name = #{buildingName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="floorName != null" >
+        floor_name = #{floorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doorName != null" >
+        door_name = #{doorName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        address_detail = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="addressTag != null" >
+        address_tag = #{addressTag,jdbcType=VARCHAR},
+      </if>
+      <if test="addressRemark != null" >
+        address_remark = #{addressRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderBy != null" >
+        order_by = #{orderBy,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="createCode != null" >
+        create_code = #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateCode != null" >
+        update_code = #{updateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted = #{hasDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pp.member.domain.MemberAddressDomain" >
+    update t_pp_member_address
+    set member_id = #{memberId,jdbcType=VARCHAR},
+      address_id = #{addressId,jdbcType=VARCHAR},
+      contact_name = #{contactName,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      default_flag = #{defaultFlag,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      town_code = #{townCode,jdbcType=VARCHAR},
+      housepark_code = #{houseparkCode,jdbcType=VARCHAR},
+      building_code = #{buildingCode,jdbcType=VARCHAR},
+      unit_code = #{unitCode,jdbcType=VARCHAR},
+      floor_code = #{floorCode,jdbcType=VARCHAR},
+      door_code = #{doorCode,jdbcType=VARCHAR},
+      province_name = #{provinceName,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      area_name = #{areaName,jdbcType=VARCHAR},
+      town_name = #{townName,jdbcType=VARCHAR},
+      housepark_name = #{houseparkName,jdbcType=VARCHAR},
+      building_name = #{buildingName,jdbcType=VARCHAR},
+      unit_name = #{unitName,jdbcType=VARCHAR},
+      floor_name = #{floorName,jdbcType=VARCHAR},
+      door_name = #{doorName,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      address_tag = #{addressTag,jdbcType=VARCHAR},
+      address_remark = #{addressRemark,jdbcType=VARCHAR},
+      order_by = #{orderBy,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      create_code = #{createCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_code = #{updateCode,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      has_deleted = #{hasDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

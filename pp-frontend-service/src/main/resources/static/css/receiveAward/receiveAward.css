@@ -1,0 +1,43 @@
+body {
+    background: #F6F6F6;
+}
+main nav span{
+    display: block;
+    padding: 20px 0;
+    color: #B0B0B0;
+    font-size: 14px;
+}
+.con-ggh .getBtn {
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+}
+.con-ggh .getBtn a{
+    width:244px;
+    height:60px;
+    line-height: 60px;
+    color: #FFFFFF;
+    font-size:18px;
+    background:rgba(238,89,89,1);
+    border-radius:6px;
+    display: inline-block;
+}
+.receiveAward .theme-popbod{
+    text-align: center;
+}
+.receiveAward .theme-popbod p{
+    padding: 73px 0 44px 0;
+    color: #333333;
+    font-size: 16px;
+}
+.receiveAward .theme-popbod a{
+    display: inline-block;
+    width: 380px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: #FFFFFF;
+    background: #24446D;
+    border-radius:10px;
+    margin-bottom: 46px;
+}

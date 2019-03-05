@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pp.employee.mapper.AdminAuthDomainMapper" >
+  <resultMap id="BaseResultMap" type="com.pp.employee.domain.AdminAuthDomain" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="auth_content" property="authContent" jdbcType="VARCHAR" />
+    <result column="auth_desc" property="authDesc" jdbcType="VARCHAR" />
+    <result column="create_dept_id" property="createDeptId" jdbcType="VARCHAR" />
+    <result column="create_code" property="createCode" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_code" property="modifyCode" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="has_deleted" property="hasDeleted" jdbcType="BIT" />
+
+
+    <result column="emp_name" property="empName" jdbcType="VARCHAR" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, emp_id, auth_content, auth_desc, create_dept_id, create_code, create_time, modify_code, 
+    modify_time, has_deleted, company_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pp.employee.domain.AdminAuthDomainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    , create_name, emp_name, dept_name
+    from (
+    select aa.*
+    , ae.name create_name
+    , emp.name emp_name
+    , empd.name dept_name
+    from t_pp_admin_auth aa
+    left join t_pp_admin_employee ae on ae.id = aa.create_code
+    left join t_pp_admin_employee emp on emp.id = aa.emp_id
+    left join t_pp_admin_dept empd on empd.id = emp.dept_id
+    ) t
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_pp_admin_auth
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_pp_admin_auth
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pp.employee.domain.AdminAuthDomain" >
+    insert into t_pp_admin_auth (id, emp_id, auth_content, 
+      auth_desc, create_dept_id, create_code, 
+      create_time, modify_code, modify_time, 
+      has_deleted, company_id)
+    values (#{id,jdbcType=VARCHAR}, #{empId,jdbcType=VARCHAR}, #{authContent,jdbcType=VARCHAR}, 
+      #{authDesc,jdbcType=VARCHAR}, #{createDeptId,jdbcType=VARCHAR}, #{createCode,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyCode,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{hasDeleted,jdbcType=BIT},
+      #{companyId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pp.employee.domain.AdminAuthDomain" >
+    insert into t_pp_admin_auth
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="empId != null" >
+        emp_id,
+      </if>
+      <if test="authContent != null" >
+        auth_content,
+      </if>
+      <if test="authDesc != null" >
+        auth_desc,
+      </if>
+      <if test="createDeptId != null" >
+        create_dept_id,
+      </if>
+      <if test="createCode != null" >
+        create_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyCode != null" >
+        modify_code,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null" >
+        #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="authContent != null" >
+        #{authContent,jdbcType=VARCHAR},
+      </if>
+      <if test="authDesc != null" >
+        #{authDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDeptId != null" >
+        #{createDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="createCode != null" >
+        #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyCode != null" >
+        #{modifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasDeleted != null" >
+        #{hasDeleted,jdbcType=BIT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pp.employee.domain.AdminAuthDomainExample" resultType="java.lang.Integer" >
+    select count(*) from t_pp_admin_auth
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pp.employee.domain.AdminAuthDomain" >
+    update t_pp_admin_auth
+    <set >
+      <if test="empId != null" >
+        emp_id = #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="authContent != null" >
+        auth_content = #{authContent,jdbcType=VARCHAR},
+      </if>
+      <if test="authDesc != null" >
+        auth_desc = #{authDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDeptId != null" >
+        create_dept_id = #{createDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="createCode != null" >
+        create_code = #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyCode != null" >
+        modify_code = #{modifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted = #{hasDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pp.employee.domain.AdminAuthDomain" >
+    update t_pp_admin_auth
+    set emp_id = #{empId,jdbcType=VARCHAR},
+      auth_content = #{authContent,jdbcType=VARCHAR},
+      auth_desc = #{authDesc,jdbcType=VARCHAR},
+      create_dept_id = #{createDeptId,jdbcType=VARCHAR},
+      create_code = #{createCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_code = #{modifyCode,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      has_deleted = #{hasDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

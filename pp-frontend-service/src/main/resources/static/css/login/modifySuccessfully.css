@@ -1,0 +1,30 @@
+body {
+    background: #F6F6F6;
+}
+
+main {
+    background: #FFFFFF;
+}
+
+.modifySuccessfully {
+    margin-top: 63px;
+    width: 100%;
+    text-align: center;
+    padding-top: 150px;
+    padding-bottom: 400px;
+}
+
+.modifySuccessfully img {
+    width: 35px;
+    height: 35px;
+}
+
+.modifySuccessfully span {
+    display: inline-block;
+    padding-left: 25px;
+    font-size: 18px;
+}
+
+.modifySuccessfully span a {
+    color: #6EA870;
+}

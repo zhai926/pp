@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pp.employee.mapper.AdminEmployeeDomainMapper" >
+  <resultMap id="BaseResultMap" type="com.pp.employee.domain.AdminEmployeeDomain" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="card_num" property="cardNum" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="street_code" property="streetCode" jdbcType="VARCHAR" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="street_name" property="streetName" jdbcType="VARCHAR" />
+    <result column="post_id" property="postId" jdbcType="VARCHAR" />
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+    <result column="create_code" property="createCode" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="modify_code" property="modifyCode" jdbcType="VARCHAR" />
+    <result column="has_deleted" property="hasDeleted" jdbcType="BIT" />
+
+    <result column="create_name" property="createName" jdbcType="VARCHAR"/>
+    <result column="post_name" property="postName" jdbcType="VARCHAR"/>
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+    <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+    <result column="has_password" property="hasPassword" jdbcType="BIT" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, status, name, sex, mobile, card_type, card_num, account, address, province_code,
+    city_code, area_code, street_code, province_name, city_name, area_name, street_name,
+    post_id, dept_id, create_code, create_time, modify_time, modify_code, has_deleted, company_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pp.employee.domain.AdminEmployeeDomainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    , post_name, dept_name, create_name, has_password, user_id
+    from (
+    select e.*, p.name as post_name, d.name as dept_name, ce.name as create_name, u.has_password,u.id user_id
+    from t_pp_admin_employee e
+    left join t_pp_admin_employee ce on ce.id = e.create_code
+    left join t_pp_admin_post p on p.id = e.post_id
+    left join t_pp_admin_dept d on d.id = e.dept_id
+    left join t_pp_admin_user u on u.emp_id = e.id
+    ) rj
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    , has_password, user_id
+    from (
+    select e.*, u.has_password, u.id user_id from t_pp_admin_employee e
+    left join t_pp_admin_user u on u.emp_id = e.id
+    ) t
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_pp_admin_employee
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pp.employee.domain.AdminEmployeeDomain" >
+    insert into t_pp_admin_employee (id, status, name, 
+      sex, mobile, card_type, 
+      card_num, account, address, 
+      province_code, city_code, area_code, 
+      street_code, province_name, city_name, 
+      area_name, street_name, post_id, 
+      dept_id, create_code, create_time, 
+      modify_time, modify_code, has_deleted, company_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, 
+      #{cardNum,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{streetCode,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{areaName,jdbcType=VARCHAR}, #{streetName,jdbcType=VARCHAR}, #{postId,jdbcType=VARCHAR}, 
+      #{deptId,jdbcType=VARCHAR}, #{createCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyCode,jdbcType=VARCHAR}, #{hasDeleted,jdbcType=BIT}, #{companyId, jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pp.employee.domain.AdminEmployeeDomain" >
+    insert into t_pp_admin_employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="cardNum != null" >
+        card_num,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="provinceCode != null" >
+        province_code,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="streetCode != null" >
+        street_code,
+      </if>
+      <if test="provinceName != null" >
+        province_name,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="streetName != null" >
+        street_name,
+      </if>
+      <if test="postId != null" >
+        post_id,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="createCode != null" >
+        create_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modifyCode != null" >
+        modify_code,
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNum != null" >
+        #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="streetCode != null" >
+        #{streetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="streetName != null" >
+        #{streetName,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null" >
+        #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="createCode != null" >
+        #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyCode != null" >
+        #{modifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hasDeleted != null" >
+        #{hasDeleted,jdbcType=BIT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pp.employee.domain.AdminEmployeeDomainExample" resultType="java.lang.Integer" >
+    select count(*) from t_pp_admin_employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pp.employee.domain.AdminEmployeeDomain" >
+    update t_pp_admin_employee
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNum != null" >
+        card_num = #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="streetCode != null" >
+        street_code = #{streetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        province_name = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="streetName != null" >
+        street_name = #{streetName,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null" >
+        post_id = #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="createCode != null" >
+        create_code = #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyCode != null" >
+        modify_code = #{modifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted = #{hasDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pp.employee.domain.AdminEmployeeDomain" >
+    update t_pp_admin_employee
+    set status = #{status,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      card_num = #{cardNum,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      street_code = #{streetCode,jdbcType=VARCHAR},
+      province_name = #{provinceName,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      area_name = #{areaName,jdbcType=VARCHAR},
+      street_name = #{streetName,jdbcType=VARCHAR},
+      post_id = #{postId,jdbcType=VARCHAR},
+      dept_id = #{deptId,jdbcType=VARCHAR},
+      create_code = #{createCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_code = #{modifyCode,jdbcType=VARCHAR},
+      has_deleted = #{hasDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <select id="selectByRoleId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    , post_name, dept_name, create_name, has_password, user_id, role_id
+    from (
+    select e.*, p.name as post_name, d.name as dept_name, ce.name as create_name, u.has_password,u.id user_id, aur.role_id
+    from t_pp_admin_employee e
+    right join t_pp_admin_user_role aur on aur.user_id = e.id
+    left join t_pp_admin_employee ce on ce.id = e.create_code
+    left join t_pp_admin_post p on p.id = e.post_id
+    left join t_pp_admin_dept d on d.id = e.dept_id
+    left join t_pp_admin_user u on u.emp_id = e.id
+    ) rj
+    where role_id = #{roleId}
+    order by create_time desc
+  </select>
+</mapper>

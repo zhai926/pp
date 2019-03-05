@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pp.employee.mapper.AdminUserDomainMapper" >
+  <resultMap id="BaseResultMap" type="com.pp.employee.domain.AdminUserDomain" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="card_num" property="cardNum" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="passwork" property="passwork" jdbcType="VARCHAR" />
+    <result column="secure" property="secure" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="create_code" property="createCode" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="modify_code" property="modifyCode" jdbcType="VARCHAR" />
+    <result column="has_deleted" property="hasDeleted" jdbcType="BIT" />
+    <result column="has_password" property="hasPassword" jdbcType="BIT" />
+
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, emp_id, name, mobile, card_type, card_num, account, passwork, secure, icon, create_code, 
+    create_time, modify_time, modify_code, has_deleted, has_password, company_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    , dept_id
+    FROM
+    (
+    select au.*, ae.dept_id from t_pp_admin_user au
+    left join t_pp_admin_employee ae on ae.id = au.emp_id
+    ) t
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_pp_admin_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pp.employee.domain.AdminUserDomain" >
+    insert into t_pp_admin_user (id, emp_id, name, 
+      mobile, card_type, card_num, 
+      account, passwork, secure, 
+      icon, create_code, create_time, 
+      modify_time, modify_code, has_deleted, has_password, company_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{empId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, #{cardNum,jdbcType=VARCHAR}, 
+      #{account,jdbcType=VARCHAR}, #{passwork,jdbcType=VARCHAR}, #{secure,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{createCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyCode,jdbcType=VARCHAR}, #{hasDeleted,jdbcType=BIT}, #{hasPassword, jdbcType=BIT},
+      #{companyId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pp.employee.domain.AdminUserDomain" >
+    insert into t_pp_admin_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="empId != null" >
+        emp_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="cardNum != null" >
+        card_num,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="passwork != null" >
+        passwork,
+      </if>
+      <if test="secure != null" >
+        secure,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="createCode != null" >
+        create_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modifyCode != null" >
+        modify_code,
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted,
+      </if>
+      <if test="hasPassword != null" >
+        has_password,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null" >
+        #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNum != null" >
+        #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="passwork != null" >
+        #{passwork,jdbcType=VARCHAR},
+      </if>
+      <if test="secure != null" >
+        #{secure,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="createCode != null" >
+        #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyCode != null" >
+        #{modifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hasDeleted != null" >
+        #{hasDeleted,jdbcType=BIT},
+      </if>
+      <if test="hasPassword != null" >
+        #{hasPassword,jdbcType=BIT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pp.employee.domain.AdminUserDomain" >
+    update t_pp_admin_user
+    <set >
+      <if test="empId != null" >
+        emp_id = #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNum != null" >
+        card_num = #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="passwork != null" >
+        passwork = #{passwork,jdbcType=VARCHAR},
+      </if>
+      <if test="secure != null" >
+        secure = #{secure,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="createCode != null" >
+        create_code = #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyCode != null" >
+        modify_code = #{modifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hasDeleted != null" >
+        has_deleted = #{hasDeleted,jdbcType=BIT},
+      </if>
+      <if test="hasPassword != null" >
+        has_password = #{hasPassword,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pp.employee.domain.AdminUserDomain" >
+    update t_pp_admin_user
+    set emp_id = #{empId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      card_num = #{cardNum,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      passwork = #{passwork,jdbcType=VARCHAR},
+      secure = #{secure,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      create_code = #{createCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_code = #{modifyCode,jdbcType=VARCHAR},
+      has_deleted = #{hasDeleted,jdbcType=BIT}
+      has_password = #{hasPassword,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <select id="getUserInfoByCond" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List"/>
+    , dept_id
+    FROM
+    (
+    select au.*, ae.dept_id from t_pp_admin_user au
+    left join t_pp_admin_employee ae on ae.id = au.emp_id
+    ) t
+    <where>
+      <if test="username != null">
+        AND account = #{username, jdbcType=VARCHAR}
+      </if>
+      <if test="password != null">
+        AND passwork = #{password, jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+</mapper>

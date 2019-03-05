@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>健康顾问</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/css/header/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/aboutUs/aboutUs.css}"/>
+    <link rel="stylesheet" th:href="@{/css/healthConsultant/healthConsultant.css}"/>
+    <script th:src="@{/js/jquery-1.8.3.js}"></script>
+    <script type="text/javascript" th:src="@{/js/paging.js}"></script>
+</head>
+<body>
+<header>
+    <div class="inner1 clearfix">
+        <div class="logo">
+            <img src="../../img/logo.png" alt="">
+        </div>
+        <div class="nav">
+            <ul class="clearfix">
+                <li>
+                    <a th:href="@{/}">首页</a>
+                </li>
+                <li>
+                    <a href="https://puritan.tmall.hk/p/rd663629.htm?ali_trackid=42_7b0e34ba50a8e2fbc3d5a69695f31c69">在线商城</a>
+                </li>
+                <li>
+                    <a th:href="@{/article/healthy}" class="activeNav">健康顾问</a>
+                </li>
+                <li>
+                    <a th:href="@{/article/about_us}">关于我们</a>
+                </li>
+                <li>
+                    <a href="../antiFake/antiFake.html">防伪查询</a>
+                </li>
+            </ul>
+        </div>
+        <div class="loginInfo">
+            <ul class="clearfix">
+                <th:block th:if="${null != PPM}">
+                    <li style="width: auto;">
+                        <a th:href="@{/member/center}" th:text="${#strings.substring(PPMM,0,3) + '***' + #strings.substring(PPMM,6,11)}">Admin</a><!-- #strings.substring(PPMM,0,3) + '******' + #strings.substring(PPMM,6,11)} -->
+                    </li>
+                    <li>
+                        <a th:href="@{/login/logout}">退出</a>
+                    </li>
+                </th:block>
+                <th:block th:unless="${null != PPM}">
+                    <li>
+                        <a class="login" th:href="@{/login}">登陆</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/register}">注册</a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="pic">
+        <img src="../../img/slide_6.jpg" alt="加载失败">
+    </div>
+    <div class="content inner">
+        <div class="search">
+            <input type="text" id="keyword" laceholder="请简单完整的输入您的问题,如什么是'维生素E'...">
+            <img th:src="@{/img/search.png}" style="cursor: pointer" alt="sou" id="searchBtn">
+        </div>
+        <div class="solution">
+            <div class="item" th:each="healthy, healthyStat: ${healthMenuList}">
+                <h2 th:class="${healthyStat.index == 0}? 'physicalCondition' : (${healthyStat.index == 1} ? 'antiTrouble' : (${healthyStat.index == 2} ? 'livingHabit' : 'referenceNutrient')) " th:text="${healthy.name}">身体状况</h2>
+                <ul>
+                    <li th:each="ht :${healthy.conList}">
+                        <a th:href="@{ '/article/healthy_type?menuType=3&menuId=' + ${healthy.id} + '&contentId=' + ${ht.id}}" th:text="${ht.name}">为什么女性更容易患缺铁性贫血？</a>
+                    </li>
+                    <!--<li>
+                        <a href="./HealthInformation.html">为什么女性更容易患缺铁性贫血？</a>
+                    </li>
+                    <li>
+                        <a href="./HealthInformation.html">为什么女性更容易患缺铁性贫血？</a>
+                    </li>
+                    <li>
+                        <a href="./HealthInformation.html">为什么女性更容易患缺铁性贫血？</a>
+                    </li>-->
+                </ul>
+                <a th:href="@{'/article/healthy_type?menuType=3&menuId=' + ${healthy.id}}" class="more">更多相关问题></a>
+            </div>
+        </div>
+        <div class="shoppingGuide">
+            <div class="main-page">
+                <div class="left">
+                    <div class="nav-back"></div>
+                    <h2>分类导航</h2>
+                    <div class="nav">
+                        <div th:each="cate, cateStat: ${cateMenuList}" th:class="${cateStat.index == 0} ? 'on' : ''" th:text="${cate.name}" th:data-menuid="${cate.id}">维生素C1</div>
+                        <!--<div>维生素E</div>
+                        <div>蛋白质粉</div>
+                        <div>B族维生素</div>
+                        <div>多种维生素</div>
+                        <div>成长快乐Q片</div>-->
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="content" >
+                        <div th:class="${'con-ggh con-menu-'+cate.id}" th:each="cate: ${cateMenuList}" th:data-pageno="${cate.conPage.pageNum}" th:data-totalpage="${cate.conPage.pages}" th:data-totalsize="${cate.conPage.total}">
+                            <ul>
+                                <li  th:each="cn: ${cate.conPage.list}">
+                                    <a th:href="@{ '/article/healthy_type?menuType=2&menuId=' + ${cate.id} + '&contentId=' + ${cn.id}}" th:text="${cn.name}">为什么说富含VC的针叶樱桃异常珍贵 ?</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--<div class="con-ggh">
+                            <h3>常见问题</h3>
+                            <ul>
+                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
+                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
+                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
+                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
+                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
+                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
+                            </ul>
+                        </div>
+                        <div class="con-ggh">
+                            蛋白质粉
+                        </div>
+                        <div class="con-ggh">
+                            B族维生素
+                        </div>
+                        <div class="con-ggh">
+                            多种维生素
+                        </div>
+                        <div class="con-ggh">
+                            成长快乐Q片
+                        </div>-->
+                    </div>
+                    <div class="paging">
+                        <div value="10"></div>
+                        <!--<div th:include="common/page :: pager" th:remove="tag"></div>-->
+                        <div id="page" class="page_div"></div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+
+<div class="mask">
+    <div class="mask_content">
+        <div class="cancel_mask">x</div>
+        <div class="mask_title">
+            扫码进入
+        </div>
+        <div class="mask_code">
+            <img src="/img/wx_mini_code.png" alt="">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"  th:inline="javascript">
+
+    $(".mini_code").click(function(){
+            $(".mask").show()
+        })
+
+    $(".cancel_mask").click(function(){
+        $(".mask").hide()
+    })
+
+
+    $(".main-page .nav div").mouseenter(function () {
+        var $this = $(this);
+        var index = $this.index();
+    }).mouseleave(function () {
+        var $this = $(this);
+        var index = $this.index();
+    }).click(function () {
+        var $this = $(this);
+
+        var index = $this.index();
+        var l = -(index * 800);
+        $(".main-page .nav div").removeClass("on");
+        $(".main-page .nav div").eq(index).addClass("on");
+        $(".main-page .content .con-ggh:eq(0)").stop().animate({"margin-top": l}, 500);
+        setPaging();
+    });
+
+    function setPaging (){
+        var menuId = $(".nav .on").data('menuid');
+        var con = $(".con-menu-" + menuId);
+        var pageNo = con.data('pageno'), totalPage = con.data('totalpage'), totalSize = con.data('totalsize');
+        //分页
+        $("#page").paging({
+            pageNo: pageNo,
+            totalPage: totalPage,
+            totalSize: totalSize,
+            callback: function (num) {
+                var menuId = $(".nav .on").data('menuid');
+                // alert(menuId + '  ' + num)
+                window.location.href = "/article/healthy?menuId=" + menuId +"&page=" + num;
+            }
+        })
+    }
+    setPaging();
+
+    function setKeyword(){
+        var keyword = [[${keyword}]];
+        if(undefined != keyword && null != keyword){
+            $("#keyword").val(keyword);
+        }
+    }setKeyword();
+
+    $("#searchBtn").click(function(){
+        var keyword = $("#keyword").val();
+        console.log(keyword);
+        if(undefined != keyword && null != keyword){
+            window.location.href = "/article/healthy?keyword=" + keyword;
+        }
+    });
+
+
+    /*
+    // 模拟ajax数据用以下方法，方便用户更好的掌握用法
+    //参数为当前页
+    ajaxTest(1);
+
+    function ajaxTest(num) {
+        $.ajax({
+            url: "table.json",
+            type: "get",
+            data: {},
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                //分页
+                $("#page").paging({
+                    pageNo: num,
+                    totalPage: data.totalPage,
+                    totalSize: data.totalSize,
+                    callback: function(num) {
+                        ajaxTest(num)
+                    }
+                })
+            }
+        })
+    }
+    */
+</script>
+</body>
+</html>
