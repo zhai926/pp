@@ -40,7 +40,7 @@
                     <a th:href="@{/article/healthy}">健康顾问</a>
                 </li>
                 <li>
-                    <a href="./article/about_us" >关于我们</a>
+                    <a th:href="@{/article/about_us}">关于我们</a>
                 </li>
                 <li>
                     <a class="mini_code" >防伪查询</a>
@@ -50,7 +50,7 @@
         <div class="loginInfo">
             <ul class="clearfix">
                 <li>
-                    <a class="login" href="login.html">登陆</a>
+                    <a class="login" th:href="@{/login}">登陆</a>
                 </li>
                 <li>
                     <a th:href="@{/register}">注册</a>
@@ -80,7 +80,7 @@
                <!-- <img th:src="@{/check/make_pic_code}" alt="加载失败">-->
             </div>
             <div class="btn">
-                <a href="../member/retrievePassword.html" class="forgetPassword">忘记密码?</a>
+                <a th:href="@{/register/retrievePassword}" class="forgetPassword">忘记密码?</a>
                 <a href="javascript:void (0)" class="loginBtn">登陆</a>
                 <button type="submit" id="submitBtn" hidden="hidden">提交</button>
                 <ul>

@@ -36,7 +36,7 @@
                     <a th:href="@{/article/healthy}">健康顾问</a>
                 </li>
                 <li>
-                    <a href="./article/about_us" >关于我们</a>
+                    <a th:href="@{/article/about_us}" >关于我们</a>
                 </li>
                 <li>
                     <a class="mini_code" >防伪查询</a>
@@ -235,6 +235,17 @@
     </div>
     <div class="theme-popover-mask"></div>
 </main>
+<div class="mask">
+        <div class="mask_content">
+            <div class="cancel_mask">x</div>
+            <div class="mask_title">
+                扫码进入
+            </div>
+            <div class="mask_code">
+                <img src="/img/wx_mini_code.png" alt="">
+            </div>
+        </div>
+    </div>
 <script>
     var cur_edit = '';// 1管理,编辑 ,, 2兑换编辑
 
@@ -258,6 +269,14 @@
     jQuery(document).ready(function ($) {
         var memberGiftId = '';
 
+        $(".mini_code").click(function(){
+            $(".mask").show()
+        })
+
+        $(".cancel_mask").click(function(){
+            $(".mask").hide()
+        })
+        
         // 收货地址管理
         $('.address a').bind('click', function () {
             cur_edit = '1';
@@ -507,10 +526,10 @@
                 "                            <a href=\"javascript:void(0)\" onclick=\"editAddress(this)\" data-id=\""+fv.id+"\" data-addressId=\""+fv.addressId+"\" data-contactname=\""+fv.contactName+"\"" +
                 "                               data-contactphone=\""+fv.contactPhone+"\" data-provincename=\""+fv.provinceName+"\" data-cityname=\""+fv.cityName+"\" data-areaname=\""+fv.areaName+"\"" +
                 "                               data-addressdetail=\""+fv.addressDetail+"\">\n" +
-                "                                <img src=\"\" alt=\"编辑\">\n" +
+                "                                编辑" +
                 "                            </a>\n" +
                 "                            <a href=\"javascript:void(0)\" onclick=\"deleteAddress(this)\" data-id=\""+fv.id+"\">\n" +
-                "                                <img src=\"\" alt=\"删除\">\n" +
+                "                                删除" +
                 "                            </a>\n" +
                 "                        </div>\n" +
                 "                    </li>"

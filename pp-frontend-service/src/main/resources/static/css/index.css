@@ -373,10 +373,15 @@ footer
     cursor: pointer;
     position: relative;
 }
+.operation ul li:hover{
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+}
 .operation ul li.service:hover .more-info{
     width: 220px;
     left: -215px;
     padding: 5px;
+    color: #A9A9A9;
 }
 .operation .more-info{
     transition: .2s;
@@ -393,6 +398,9 @@ footer
     background-color: #fff;
     position: relative;
     box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.1);
+}
+.operation .more-info div img{
+    width: 200px;
 }
 .operation .more-info div:before{
     content: '';

@@ -39,24 +39,24 @@
             </ul>
         </div>
         <div class="loginInfo">
-            <ul class="clearfix">
-                <th:block th:if="${null != PPM}">
-                    <li style="width: auto;">
-                        <a th:href="@{/member/center}" th:text="${#strings.substring(PPMM,0,3) + '***' + #strings.substring(PPMM,6,11)}">Admin</a><!-- #strings.substring(PPMM,0,3) + '******' + #strings.substring(PPMM,6,11)} -->
-                    </li>
-                    <li>
-                        <a th:href="@{/login/logout}">退出</a>
-                    </li>
-                </th:block>
-                <th:block th:unless="${null != PPM}">
-                    <li>
-                        <a class="login" th:href="@{/login}">登陆</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/register}">注册</a>
-                    </li>
-                </th:block>
-            </ul>
+            <!--<ul class="clearfix">-->
+                <!--<th:block th:if="${null != PPM}">-->
+                    <!--<li style="width: auto;">-->
+                        <!--<a th:href="@{/member/center}" th:text="${#strings.substring(PPMM,0,3) + '***' + #strings.substring(PPMM,6,11)}">Admin</a>&lt;!&ndash; #strings.substring(PPMM,0,3) + '******' + #strings.substring(PPMM,6,11)} &ndash;&gt;-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a th:href="@{/login/logout}">退出</a>-->
+                    <!--</li>-->
+                <!--</th:block>-->
+                <!--<th:block th:unless="${null != PPM}">-->
+                    <!--<li>-->
+                        <!--<a class="login" th:href="@{/login}">登陆</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a th:href="@{/register}">注册</a>-->
+                    <!--</li>-->
+                <!--</th:block>-->
+            <!--</ul>-->
         </div>
     </div>
 </header>

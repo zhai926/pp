@@ -31,29 +31,29 @@
                     <a th:href="@{/article/about_us}">关于我们</a>
                 </li>
                 <li>
-                    <a href="../antiFake/antiFake.html">防伪查询</a>
+                    <a class="mini_code">防伪查询</a>
                 </li>
             </ul>
         </div>
         <div class="loginInfo">
-            <ul class="clearfix">
-                <th:block th:if="${null != PPM}">
-                    <li style="width: auto;">
-                        <a th:href="@{/member/center}" th:text="${#strings.substring(PPMM,0,3) + '***' + #strings.substring(PPMM,6,11)}">Admin</a><!-- #strings.substring(PPMM,0,3) + '******' + #strings.substring(PPMM,6,11)} -->
-                    </li>
-                    <li>
-                        <a th:href="@{/login/logout}">退出</a>
-                    </li>
-                </th:block>
-                <th:block th:unless="${null != PPM}">
-                    <li>
-                        <a class="login" th:href="@{/login}">登陆</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/register}">注册</a>
-                    </li>
-                </th:block>
-            </ul>
+            <!--<ul class="clearfix">-->
+                <!--<th:block th:if="${null != PPM}">-->
+                    <!--<li style="width: auto;">-->
+                        <!--<a th:href="@{/member/center}" th:text="${#strings.substring(PPMM,0,3) + '***' + #strings.substring(PPMM,6,11)}">Admin</a>&lt;!&ndash; #strings.substring(PPMM,0,3) + '******' + #strings.substring(PPMM,6,11)} &ndash;&gt;-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a th:href="@{/login/logout}">退出</a>-->
+                    <!--</li>-->
+                <!--</th:block>-->
+                <!--<th:block th:unless="${null != PPM}">-->
+                    <!--<li>-->
+                        <!--<a class="login" th:href="@{/login}">登陆</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a th:href="@{/register}">注册</a>-->
+                    <!--</li>-->
+                <!--</th:block>-->
+            <!--</ul>-->
         </div>
     </div>
 </header>
@@ -61,11 +61,7 @@
     <div class="pic">
         <img src="../../img/slide_6.jpg" alt="加载失败">
     </div>
-    <div class="content inner">
-        <div class="search">
-            <input type="text" id="keyword" laceholder="请简单完整的输入您的问题,如什么是'维生素E'...">
-            <img th:src="@{/img/search.png}" style="cursor: pointer" alt="sou" id="searchBtn">
-        </div>
+    <div class="content inner"> 
         <div class="solution">
             <div class="item" th:each="healthy, healthyStat: ${healthMenuList}">
                 <h2 th:class="${healthyStat.index == 0}? 'physicalCondition' : (${healthyStat.index == 1} ? 'antiTrouble' : (${healthyStat.index == 2} ? 'livingHabit' : 'referenceNutrient')) " th:text="${healthy.name}">身体状况</h2>
@@ -73,19 +69,14 @@
                     <li th:each="ht :${healthy.conList}">
                         <a th:href="@{ '/article/healthy_type?menuType=3&menuId=' + ${healthy.id} + '&contentId=' + ${ht.id}}" th:text="${ht.name}">为什么女性更容易患缺铁性贫血？</a>
                     </li>
-                    <!--<li>
-                        <a href="./HealthInformation.html">为什么女性更容易患缺铁性贫血？</a>
-                    </li>
-                    <li>
-                        <a href="./HealthInformation.html">为什么女性更容易患缺铁性贫血？</a>
-                    </li>
-                    <li>
-                        <a href="./HealthInformation.html">为什么女性更容易患缺铁性贫血？</a>
-                    </li>-->
                 </ul>
                 <a th:href="@{'/article/healthy_type?menuType=3&menuId=' + ${healthy.id}}" class="more">更多相关问题></a>
             </div>
         </div>
+        <div class="search">
+                <input type="text" style="padding: 0 20px;width: 380px;" id="keyword" laceholder="请简单完整的输入您的问题,如什么是'维生素E'...">
+                <img th:src="@{/img/search.png}" style="cursor: pointer" alt="sou" id="searchBtn">
+            </div>
         <div class="shoppingGuide">
             <div class="main-page">
                 <div class="left">
@@ -109,29 +100,6 @@
                                 </li>
                             </ul>
                         </div>
-                        <!--<div class="con-ggh">
-                            <h3>常见问题</h3>
-                            <ul>
-                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
-                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
-                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
-                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
-                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
-                                <li>为什么说富含VC的针叶樱桃异常珍贵 ?</li>
-                            </ul>
-                        </div>
-                        <div class="con-ggh">
-                            蛋白质粉
-                        </div>
-                        <div class="con-ggh">
-                            B族维生素
-                        </div>
-                        <div class="con-ggh">
-                            多种维生素
-                        </div>
-                        <div class="con-ggh">
-                            成长快乐Q片
-                        </div>-->
                     </div>
                     <div class="paging">
                         <div value="10"></div>

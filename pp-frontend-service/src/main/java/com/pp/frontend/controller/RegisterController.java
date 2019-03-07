@@ -37,6 +37,14 @@ public class RegisterController extends FSBaseController{
         return "login/register";
     }
 
+
+    @ApiOperation("进到忘记密码页面")
+    @GetMapping(value = "/retrievePassword")
+    public String tOretrievePassword(Model model){
+        return "login/retrievePassword";
+    }
+
+
     @ApiOperation("注册")
     @PostMapping(value = "/register_pc")
     @ResponseBody

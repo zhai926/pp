@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>个人中心</title>
@@ -29,7 +29,7 @@
                     <a th:href="@{/article/healthy}">健康顾问</a>
                 </li>
                 <li>
-                    <a href="./article/about_us" >关于我们</a>
+                    <a th:href="@{/article/about_us}">关于我们</a>
                 </li>
                 <li>
                     <a class="mini_code" >防伪查询</a>
@@ -55,7 +55,7 @@
                     <a href="../personalCenter/personalCenter.html">Admin</a>
                 </li>
                 <li>
-                    <a href="../login/register.html">注册</a>
+                    <a th:href="@{/register}">注册</a>
                 </li>
             </ul>
         </div>

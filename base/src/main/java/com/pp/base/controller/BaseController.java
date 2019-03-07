@@ -74,11 +74,13 @@ public abstract class BaseController {
     public Object getMemberObj(){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
+        System.out.println("请求的url...." + request.getRequestURI());
 //        RequestAttributes ra = RequestContextHolder.getRequestAttributes();
 //        ServletRequestAttributes sra = (ServletRequestAttributes) ra;
 //        HttpServletRequest request = sra.getRequest();
         HttpSession session = request.getSession();
         if (null == session) {
+            System.out.println("用户未登录....");
             throw BusinessException.withErrorCode(ErrorConstant.Auth.NOT_LOGIN);
         }
         return session.getAttribute(WebConst.LOGIN_SESSION_KEY_MEMER);

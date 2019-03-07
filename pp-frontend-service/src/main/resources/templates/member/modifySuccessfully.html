@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>修改成功</title>
@@ -26,7 +26,7 @@
                     <a th:href="@{/article/healthy}">健康顾问</a>
                 </li>
                 <li>
-                    <a href="./article/about_us" >关于我们</a>
+                    <a th:href="@{/article/about_us}" >关于我们</a>
                 </li>
                 <li>
                     <a class="mini_code" >防伪查询</a>
@@ -36,7 +36,7 @@
         <div class="loginInfo">
             <ul class="clearfix">
                 <li>
-                    <a class="login" href="../login/login.html">登陆</a>
+                    <a class="login" th:href="@{/login}">登陆</a>
                 </li>
                 <li>
                     <a th:href="@{/register}">注册</a>
@@ -51,7 +51,27 @@
         <span id="time">您的新密码已经修改成功!5秒后为您跳转至<a href="../login/login.html">登录</a>页面</span>
     </div>
 </main>
+<div class="mask">
+    <div class="mask_content">
+        <div class="cancel_mask">x</div>
+        <div class="mask_title">
+            扫码进入
+        </div>
+        <div class="mask_code">
+            <img src="/img/wx_mini_code.png" alt="">
+        </div>
+    </div>
+</div>
 <script>
+
+$(".mini_code").click(function(){
+            $(".mask").show()
+        })
+
+    $(".cancel_mask").click(function(){
+        $(".mask").hide()
+    })
+    
     //定义函数myClose关闭当前窗口
     function myClose() {
         //将id为time的元素的内容转为整数，保存在变量n中

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>防伪查询</title>
@@ -35,15 +35,15 @@
             </ul>
         </div>
         <div class="loginInfo">
-            <ul class="clearfix">
-                <li>
-                    <a class="login" href="javascript:void(0)" style="display: none">登陆</a>
-                    <a href="../personalCenter/personalCenter.html">Admin</a>
-                </li>
-                <li>
-                    <a href="../login/register.html">注册</a>
-                </li>
-            </ul>
+            <!--<ul class="clearfix">-->
+                <!--<li>-->
+                    <!--<a class="login" href="javascript:void(0)" style="display: none">登陆</a>-->
+                    <!--<a href="../personalCenter/personalCenter.html">Admin</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a th:href="@{/register}">注册</a>-->
+                <!--</li>-->
+            <!--</ul>-->
         </div>
     </div>
 </header>

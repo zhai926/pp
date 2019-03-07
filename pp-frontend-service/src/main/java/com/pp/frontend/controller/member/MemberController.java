@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 @Api("用户")
 @Controller
-@RequestMapping("member")
+@RequestMapping("/member")
 public class MemberController extends FSBaseController {
 
     @Autowired
@@ -29,6 +29,7 @@ public class MemberController extends FSBaseController {
     private IMemberGiftService memberGiftService;
     @Autowired
     private IMemberAddressService memberAddressService;
+
 
     @ApiOperation("会员中心")
     @GetMapping(value="/center")
@@ -42,7 +43,6 @@ public class MemberController extends FSBaseController {
 
         model.addAttribute("memberGiftList", memberGiftList);
         model.addAttribute("memberAddressList", memberAddressList);
-
         return "member/center";
     }
 
