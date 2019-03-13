@@ -66,24 +66,14 @@
             <div class="left">
                 <div class="nav-back"></div>
                 <div class="nav" >
-                    <div th:each="menu, menuStat: ${menuList}" th:class="${menuStat.index==index}? 'on' : ''" th:text="${menu.name}"  th:data-index="${menuStat.index}" th:data-menuid="${menu.id}" th:data-menuname="${menu.name}">公司简介</div>
+                    <div th:each="menu, menuStat: ${menuList}" th:class="${menuStat.index==1}? 'on' : ''">
+                        <a th:href="@{'/article/about_us?index='+ ${menuStat.index}}"  th:text="${menu.name}"></a>
+                    </div>
                 </div>
             </div>
-
             <div class="right">
                 <div class="content">
-                    <div th:each="menu, menuStat: ${menuList}" class="con-ggh" >
-                        <th:block th:if="${menu.name == '新闻动态'}">
-                            <ul>
-                                <li th:each="ht :${menu.conList}" style="display: inline-block;width: 100%;">
-                                    <a th:href="@{ '/article/New_type?menuId=' + ${menu.id} + '&contentId=' +${ht.id} } "  th:utext="${ht.name}">为什么？</a>
-                                </li>
-                            </ul>
-                        </th:block>
-                        <th:block th:unless="${menu.name =='新闻动态'}">
-                            <div th:utext="${menu.defaultContent}">公司简介</div>
-                        </th:block>
-                    </div>
+                    <div class="con-ggh" th:utext="${content}"></div>
                 </div>
             </div>
             <div class="clear"></div>
@@ -106,15 +96,13 @@
 
 <script type="text/javascript">
 
-   
-$(".mini_code").click(function(){
+    $(".mini_code").click(function(){
             $(".mask").show()
         })
 
     $(".cancel_mask").click(function(){
         $(".mask").hide()
     })
-
     $(".main-page .nav div").mouseenter(function () {
         var $this = $(this);
         var index = $this.index();
@@ -127,27 +115,8 @@ $(".mini_code").click(function(){
         var l = -(index * 800);
         $(".main-page .nav div").removeClass("on");
         $(".main-page .nav div").eq(index).addClass("on");
-        $(".main-page .content .con-ggh:eq(0)").stop().animate({"margin-top": l}, 300);
-
-        setPageMenu();
+        $(".main-page .content .con-ggh:eq(0)").stop().animate({"margin-top": l}, 500);
     });
-
-    function setContentShow(){
-        // 设置content active
-        $(".nav .on").click();
-        $(".nav .on").show();
-    }setContentShow();
-
-    function setPageMenu(){
-        var menuId = $(".nav .on").data('menuid'), menuName = $(".nav .on").data('menuname');
-        var conName = $(".con-menu-" + menuId).data('conname');
-        $("#pageMenu").html("");
-        $("#pageMenu").append("<span>关于我们/</span><span>"+menuName+"/</span>");
-        if(conName && "" != conName){
-            $("#pageMenu").append("<span>"+conName+"</span>");
-        }
-
-    }setPageMenu();
 </script>
 </body>
 </html>

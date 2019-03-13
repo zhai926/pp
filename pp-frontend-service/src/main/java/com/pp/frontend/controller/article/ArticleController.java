@@ -42,7 +42,10 @@ public class ArticleController extends FSBaseController {
     @ApiOperation("分页查询")
     @GetMapping(value = "/about_us")
     public String aboutUs(Model model, @ApiParam(name = "name", value = "名称") @RequestParam(name = "name", required = false) String name,
-                              @ApiParam(name = "page", value = "页数", required = false)
+
+                               @ApiParam(name = "index", value = "下标", required = false)
+                               @RequestParam(name = "index", required = false) String index,
+                               @ApiParam(name = "page", value = "页数", required = false)
                                @RequestParam(name = "page", required = false, defaultValue = "1")
                                        Integer page,
                               @ApiParam(name = "pageSize", value = "每页数量", required = false)
@@ -54,25 +57,83 @@ public class ArticleController extends FSBaseController {
             domain.setType(EnumArticleMenuType.COM.getCode());
             domain.setHasDeleted(EnumBoolean.FALSE.getVal());
 
+
             List<ArticleMenuDomain> list = articleMenuService.get(domain); //articleMenuService.page(domain, page, pageSize);
 
             if(!CollectionUtils.isEmpty(list)){
                 for(ArticleMenuDomain amd: list){
                     ArticleContentDomain con = articleContentService.getDefaultByMenuId(amd.getId());
                     if(null != con){
-                        //System.out.println("获取：" + new String(con.getContent().getBytes(),"utf-8"));
                         amd.setDefaultContent(new String(con.getContent().getBytes(),"utf-8"));
                     }
+                    ArticleContentDomain  Newcon  = new ArticleContentDomain();
+                    Newcon.setHasDeleted(false);
+                    Newcon.setMenuId(amd.getId());
+                    PageInfo<ArticleContentDomain> pageInfo=articleContentService.page(Newcon,1,10);
+                    amd.setConList(pageInfo.getList());
                 }
             }
-
+            model.addAttribute("index",index);
             model.addAttribute("menuList", list);
             return "article/about_us";
         } catch (Exception e) {
             throw new BusinessException("请联系管理员");
         }
     }
+    /**
+     * 健康顾问
+     * @return
+     */
+    @ApiOperation("健康顾问")
+    @GetMapping(value = "/New_type")
+    public String NewType(Model model, @ApiParam(name = "name", value = "名称") @RequestParam(name = "name", required = false) String name,
 
+                          @ApiParam(name = "index", value = "下标", required = false)
+                          @RequestParam(name = "index", required = false) String index,
+                          @ApiParam(name = "contentId", value = "文章编码", required = false)
+                          @RequestParam(name = "contentId", required = false) String contentId,
+                          @ApiParam(name = "page", value = "页数", required = false)
+                          @RequestParam(name = "page", required = false, defaultValue = "1")
+                                  Integer page,
+                          @ApiParam(name = "pageSize", value = "每页数量", required = false)
+                          @RequestParam(name = "pageSize", required = false, defaultValue = "20")
+                                  Integer pageSize) {
+        try {
+            ArticleMenuDomain domain1 = new ArticleMenuDomain();
+            domain1.setType(EnumArticleMenuType.COM.getCode());
+            domain1.setHasDeleted(EnumBoolean.FALSE.getVal());
+
+            List<ArticleMenuDomain> list = articleMenuService.get(domain1);
+            if (!CollectionUtils.isEmpty(list)) {
+                for (ArticleMenuDomain amd : list) {
+                    ArticleContentDomain con = articleContentService.getDefaultByMenuId(amd.getId());
+                    if (null != con) {
+                        amd.setDefaultContent(new String(con.getContent().getBytes(), "utf-8"));
+                    }
+                    ArticleContentDomain Newcon = new ArticleContentDomain();
+                    Newcon.setHasDeleted(false);
+                    Newcon.setMenuId(amd.getId());
+                    PageInfo<ArticleContentDomain> pageInfo = articleContentService.page(Newcon, 1, 10);
+                    amd.setConList(pageInfo.getList());
+                }
+            }
+
+            model.addAttribute("menuList", list);
+
+
+            ArticleContentDomain domain = articleContentService.get(contentId);
+
+            model.addAttribute("New", domain);
+
+            model.addAttribute("index", index);
+
+            model.addAttribute("content", domain.getContent());
+
+            return "article/about_us_type";
+        } catch (Exception e) {
+            throw new BusinessException("请联系管理员");
+        }
+    }
     /**
      * 健康顾问
      * @return
@@ -139,6 +200,8 @@ public class ArticleController extends FSBaseController {
             model.addAttribute("cateMenuList", cateMenuList);
 
             model.addAttribute("keyword", keyword);
+
+            model.addAttribute("menuId",menuId);
             return "article/healthy";
         } catch (Exception e) {
             throw new BusinessException("请联系管理员");
@@ -298,13 +361,9 @@ public class ArticleController extends FSBaseController {
         try {
 
             ArticleContentDomain domain = articleContentService.get(id);
-
             return RJResponse.success(domain);
         } catch (Exception e) {
             return RJResponse.fail(exceptionMsg(e, "查询失败"));
         }
     }
-
-
-
 }
