@@ -96,7 +96,7 @@ public class ArticleContentServiceImpl implements IArticleContentService {
 
         example.or(criteriaOR);
 
-        example.setOrderByClause(" order_by asc ");
+        example.setOrderByClause(" create_time desc ");
 
         PageHelper.startPage(start, pageSize);
         List<ArticleContentDomain> list =  articleContentDomainMapper.selectByExample(example);
