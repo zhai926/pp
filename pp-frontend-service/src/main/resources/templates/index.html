@@ -228,11 +228,19 @@
     $().ready(function() {
         var putRecords = document.getElementById('putRecords');
         var hrefStr = location.origin+'';
+//        if(hrefStr.indexOf('cn') > -1){
+//	        putRecords.innerHTML = '沪ICP备14010774号-1 版权所有@2015普丽普莱.保留所有版权'
+//        }else{
+//	        putRecords.innerHTML = '琼ICP备14002124号-1 版权所有@2015普丽普莱.保留所有版权'
+//        }
         if(hrefStr.indexOf('cn') > -1){
-	        putRecords.innerHTML = '沪ICP备14010774号-1 版权所有@2015普丽普莱.保留所有版权'
+            putRecords.innerHTML = '<a style="color: #000;" href="http://www.miitbeian.gov.cn" target="_blank">沪ICP备14010774号-1</a> 版权所有@2015普丽普莱.保留所有版权'
         }else{
-	        putRecords.innerHTML = '琼ICP备14002124号-1 版权所有@2015普丽普莱.保留所有版权'
+            putRecords.innerHTML = '<a style="color: #000;" href="http://www.miitbeian.gov.cn" target="_blank">沪ICP备15045515号-2</a> 版权所有@2015普丽普莱.保留所有版权'
+           //putRecords.innerHTML = '琼ICP备14002124号-1 版权所有@2015普丽普莱.保留所有版权'
         }
+
+
         $("#msgSubmit").bind('click', function(){
             var themeInfo = $("#themeInfo").val(), themeText = $("#themeText").val();
             if(null == themeInfo || '' == themeInfo){
@@ -299,12 +307,12 @@
 
 
     $('#slider').Slider();
-    var str1 = '<p class="sign1"><span>1</span></p>';
-    var str2 = '<p class="sign2"><span>2</span></p>';
-    var str3 = '<p class="sign3"><span>3</span></p>';
-    $('.content ul li:eq(0) a').append(str1);
-    $('.content ul li:eq(1) a').append(str2);
-    $('.content ul li:eq(2) a').append(str3)
+//    var str1 = '<p class="sign1"><span>1</span></p>';
+//    var str2 = '<p class="sign2"><span>2</span></p>';
+//    var str3 = '<p class="sign3"><span>3</span></p>';
+//    $('.content ul li:eq(0) a').append(str1);
+//    $('.content ul li:eq(1) a').append(str2);
+//    $('.content ul li:eq(2) a').append(str3)
     /*模态框*/
     //animate.css动画触动一次方法
     $.fn.extend({
